@@ -6,7 +6,7 @@
 #include <map>
 #include <string>
 
-#include "tools/position.hpp"
+#include "tools/vertex.hpp"
 #include "tools/size2d.hpp"
 
 using std::string;
@@ -26,7 +26,7 @@ class Window
 public:
 	// Window constructor: window size (x; y) and title
 	Window(int width, int height, const char* title);
-	~Window();
+	virtual ~Window();
 
 	// ### Derived classes callbacks ###
 	// rendering function
@@ -34,17 +34,19 @@ public:
 
 	// ### mouse and keyboard event handlers ###
 	// mouse button pressing
-	virtual void mousePress(int button, int state, Position mousePos) = 0;
+	virtual void mousePress(int button, int state, Vertex mousePos) = 0;
 	// mouse moving
-	virtual void mouseMove(Position mousePos) = 0;
+	virtual void mouseMove(Vertex mousePos) = 0;
 	// mouse moving with buttons pressed (drag)
-	virtual void mousePressMove(Position mousePos) = 0;
+	virtual void mousePressMove(Vertex mousePos) = 0;
 	// keyboard key press
-	virtual void keyPress(unsigned char key, Position mousePos) = 0;
+	virtual void keyPress(unsigned char key, Vertex mousePos) = 0;
 	// keyboard special key press (F1-F12, Arrows, etc.)
-	virtual void keyPressSpecial(int key, Position mousePos) = 0;
+	virtual void keyPressSpecial(int key, Vertex mousePos) = 0;
+	// set window background
+	void setBgColor(double red, double green, double blue);
 
-private:
+protected:
 
 	// initialize GLUT
 	static int Init();
@@ -65,6 +67,8 @@ private:
 	// key - one of special keys (defined as GLUT_KEY_{name})
 	static void glutKeyPressSpecial(int key, int x, int y);
 
+private:
+
 	// list of all existing windows (int is a GLUT window ID)
 	static map<int, Window*> windows;
 
@@ -72,8 +76,7 @@ private:
 	int id;
 
 	// window size
-	int width;
-	int height;
+	Size2d size;
 };
 
 #endif // __WINDOW_HPP__

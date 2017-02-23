@@ -6,18 +6,19 @@
 class Color
 {
 public:
-	Color(int red, int green, int blue);
+	Color(double red, double green, double blue);
+	Color(const Color&);
 	~Color();
 
 	// set new color
-	void set(int red, int green, int blue);
+	void set(double red, double green, double blue);
 
 	// set as current
 	void bind() const;
 
 private:
 
-	int data[3];
+	double data[3];
 	static const int red_index;
 	static const int green_index;
 	static const int blue_index;

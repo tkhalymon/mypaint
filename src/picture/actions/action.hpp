@@ -18,4 +18,4 @@ private:
 	shared_ptr<Figure> figure;
 };
 
-#endif
+#endif // __ACTION_HPP__

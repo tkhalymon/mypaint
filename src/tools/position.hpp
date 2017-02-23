@@ -34,4 +34,4 @@ private:
 	static const int y_index;
 };
 
-#endif
+#endif // __POSITION_HPP__

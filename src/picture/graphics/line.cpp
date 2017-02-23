@@ -1,9 +1,7 @@
 #include "line.hpp"
 
-Line::Line(int x1, int y1, int x2, int y2) : start(x1, y1), end(x2, y2)
-{
-
-}
+Line::Line(Vertex start, Color c, int lineWidth) : Figure(c, lineWidth), start(start), end(start)
+{}
 
 Line::~Line()
 {
@@ -12,8 +10,14 @@ Line::~Line()
 
 void Line::render()
 {
+	bindColor();
 	glBegin(GL_LINES);
 	start.glVertex();
 	end.glVertex();
 	glEnd();
+}
+
+void Line::mouseVertex(const Vertex& v)
+{
+	end = v;
 }

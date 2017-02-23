@@ -12,32 +12,30 @@ Palette::~Palette()
 
 void Palette::display()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
-	// render
-	glFlush();
+	
 }
 
-void Palette::mousePress(int button, int state, Position mousePos)
+void Palette::mousePress(int button, int state, Vertex mousePos)
 {
 
 }
 
-void Palette::mouseMove(Position mousePos)
+void Palette::mouseMove(Vertex mousePos)
 {
 
 }
 
-void Palette::mousePressMove(Position mousePos)
+void Palette::mousePressMove(Vertex mousePos)
 {
 
 }
 
-void Palette::keyPress(unsigned char key, Position mousePos)
+void Palette::keyPress(unsigned char key, Vertex mousePos)
 {
 
 }
 
-void Palette::keyPressSpecial(int key, Position mousePos)
+void Palette::keyPressSpecial(int key, Vertex mousePos)
 {
 
 }

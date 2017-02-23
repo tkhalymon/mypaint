@@ -5,35 +5,52 @@
 #include <memory>
 #include <GL/glut.h>
 
+#include "../window.hpp"
+
+// all figures
 #include "graphics/line.hpp"
-#include "graphics/vertex.hpp"
-#include "graphics/point.hpp"
+#include "../tools/vertex.hpp"
+#include "graphics/pencil.hpp"
 #include "graphics/ellipse.hpp"
 
+// for action history
 #include "actions/action.hpp"
 
 using std::vector;
 using std::shared_ptr;
 using std::make_shared;
-using std::cerr; // rf- rf
 
-class Picture
+class Picture : public Window
 {
 public:
-	Picture();
+	Picture(int width, int height, const char* title);
 	~Picture();
 
-	void saveState();
+	// void saveState();
 
-	void render();
+	// rendering function
+	virtual void display();
+	// mouse button pressing
+	virtual void mousePress(int button, int state, Vertex mousePos);
+	// mouse moving
+	virtual void mouseMove(Vertex mousePos);
+	// mouse moving with buttons pressed (drag)
+	virtual void mousePressMove(Vertex mousePos);
+	// keyboard key press
+	virtual void keyPress(unsigned char key, Vertex mousePos);
+	// keyboard special key press (F1-F12, Arrows, etc.)
+	virtual void keyPressSpecial(int key, Vertex mousePos);
+
+	bool undo();
+
+	bool redo();
 
 private:
 
-	int width;
-	int height;
-
 	vector<shared_ptr<Figure>> figures;
 	vector<Action> actions;
+	shared_ptr<Color> activeColor;
+	int lineWidth;
 };
 
-#endif
+#endif // __PICTURE_HPP__

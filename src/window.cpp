@@ -11,8 +11,25 @@ int Window::Init()
 	int argc = 0;
 	// global GLUT initialization
 	glutInit(&argc, NULL);
-	// enable double buffering and RGB color scheme
+	// enable single buffering and RGB color scheme
 	glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB );
+	return 0;
+}
+
+Window::Window(int width, int height, const char* title) : size(width, height)
+{
+	// set window size
+	glutInitWindowSize(size.width(), size.height());
+	// create window and get it's ID
+	id = glutCreateWindow(title);
+	// set current matrix
+	glMatrixMode(GL_MODELVIEW);
+	// reset matrix to default state
+	glLoadIdentity();
+	// set coordinate system form left to right by X and from top to bottom by Y
+	glOrtho(0, size.width(), size.height(), 0, 0, 1);
+	// set window background color
+	glClearColor(0.3, 0.3, 0.3, 1);
 	// set GLUT callbacks
 	glutDisplayFunc(glutDisplay);
 	glutMouseFunc(glutMousePress);
@@ -20,29 +37,12 @@ int Window::Init()
 	glutMotionFunc(glutMousePressMove);
 	glutKeyboardFunc(glutKeyPress);
 	glutSpecialFunc(glutKeyPressSpecial);
-	return 0;
-}
-
-Window::Window(int width, int height, const char* title)
-{
-	// set window size
-	glutInitWindowSize(width, height);
-	// create window and get it's ID
-	id = glutCreateWindow(title);
-	// reset matrix to default state
-	glLoadIdentity();
-	// set coordinate system form left to right by X and from top to bottom by Y
-	glOrtho(0, width, height, 0, 0, 1);
-	// set current matrix
-	glMatrixMode(GL_MODELVIEW);
-	// write to windows list
-	windows.insert(std::pair<int, Window*>(id, this));
-	// set window background color
-	glClearColor(1, 1, 1, 1);
 	// clear window
 	glClear(GL_COLOR_BUFFER_BIT);
 	// write changes to graphic buffer
 	glFlush();
+	// write to windows list
+	windows.insert(std::pair<int, Window*>(id, this));
 }
 
 Window::~Window()
@@ -51,10 +51,15 @@ Window::~Window()
 	windows.erase(windows.find(id));
 }
 
+void Window::setBgColor(double red, double green, double blue)
+{
+	glClearColor(red, green, blue, 1);
+}
+
 /*
 	Each static method calls a current window method,
 	passing arguments in more convenient form, if possible
-	(such as Position instead of "int x, int y").
+	(such as Vertex instead of "int x, int y").
 
 	There is no check for window existing, because current window
 	is certainly in list (see constructor and destructor).
@@ -62,30 +67,31 @@ Window::~Window()
 
 void Window::glutDisplay()
 {
-	windows[glutGetWindow()]->glutDisplay();
+	windows[glutGetWindow()]->display();
 }
 
 void Window::glutMousePress(int button, int state, int x, int y)
 {
-	windows[glutGetWindow()]->mousePress(button, state, Position(x, y));
+	windows[glutGetWindow()]->mousePress(button, state, Vertex(x, y));
 }
 
 void Window::glutMouseMove(int x, int y)
 {
-	windows[glutGetWindow()]->mouseMove(Position(x, y));
+	windows[glutGetWindow()]->mouseMove(Vertex(x, y));
 }
 
 void Window::glutMousePressMove(int x, int y)
 {
-	windows[glutGetWindow()]->mousePressMove(Position(x, y));
+	windows[glutGetWindow()]->mousePressMove(Vertex(x, y));
 }
 
 void Window::glutKeyPress(unsigned char key, int x, int y)
 {
-	windows[glutGetWindow()]->keyPress(key, Position(x, y));
+	if (key == 27) exit(0);
+	windows[glutGetWindow()]->keyPress(key, Vertex(x, y));
 }
 
 void Window::glutKeyPressSpecial(int key, int x, int y)
 {
-	windows[glutGetWindow()]->keyPressSpecial(key, Position(x, y));
+	windows[glutGetWindow()]->keyPressSpecial(key, Vertex(x, y));
 }

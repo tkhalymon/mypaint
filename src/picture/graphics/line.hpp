@@ -2,19 +2,21 @@
 #define __LINE_HPP__
 
 #include <GL/glut.h>
-#include <iostream>
 
 class Line;
 
 #include "figure.hpp"
+#include "../../tools/position.hpp"
 
 class Line : public Figure
 {
 public:
-	Line(int x1, int y1, int x2, int y2);
+	Line(Vertex start, Color c, int lineWidth);
 	~Line();
 
 	void render();
+
+	void mouseVertex(const Vertex& v);
 
 private:
 
@@ -22,4 +24,4 @@ private:
 	Vertex end;
 };
 
-#endif
+#endif // __LINE_HPP__

@@ -4,13 +4,21 @@ const int Color::red_index = 0;
 const int Color::green_index = 1;
 const int Color::blue_index = 2;
 
-Color::Color(int red, int green, int blue) : data{red, green, blue}
+Color::Color(double red, double green, double blue) : data{red, green, blue}
 {}
+
+Color::Color(const Color& c)
+{
+	for (int i = 0; i < 3; ++i)
+	{
+		data[i] = c.data[i];
+	}
+}
 
 Color::~Color()
 {}
 
-void Color::set(int red, int green, int blue)
+void Color::set(double red, double green, double blue)
 {
 	data[red_index] = red;
 	data[green_index] = green;
@@ -19,5 +27,5 @@ void Color::set(int red, int green, int blue)
 
 void Color::bind() const
 {
-	glColor3iv(data);
+	glColor3dv(data);
 }

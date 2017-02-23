@@ -1,12 +1,11 @@
-#ifndef __POSITION_HPP__
-#define __POSITION_HPP__
+#ifndef __SIZE2D_HPP__
+#define __SIZE2D_HPP__
 
 /*
 	class Size2d
 
 	Used for graphic object and window size.
 */
-
 
 struct Size2d
 {
@@ -35,4 +34,4 @@ private:
 	static const int height_index;
 };
 
-#endif
+#endif // __SIZE2D_HPP__
