@@ -4,22 +4,21 @@
 #include <GL/glut.h>
 #include <iostream>
 
-class Line;
+class Point;
 
 #include "figure.hpp"
 
-class Line : public Figure
+class Point : public Figure
 {
 public:
-	Line(int x1, int y1, int x2, int y2);
-	~Line();
+	Point(int x, int y);
+	~Point();
 
 	void render();
 
 private:
 
-	Vertex start;
-	Vertex end;
+	Vertex position;
 };
 
 #endif

@@ -9,8 +9,12 @@ Vertex::Vertex(int x, int y)
 Vertex::~Vertex()
 {}
 
-Vertex::operator const int*() const
-{
-	return coordinate;
-}
+// Vertex::operator const int*() const
+// {
+// 	return coordinate;
+// }
 
+void Vertex::glVertex()
+{
+	glVertex2iv(coordinate);
+}

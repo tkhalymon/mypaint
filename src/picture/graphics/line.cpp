@@ -13,7 +13,7 @@ Line::~Line()
 void Line::render()
 {
 	glBegin(GL_LINES);
-	glVertex2iv(start);
-	glVertex2iv(end);
+	start.glVertex();
+	end.glVertex();
 	glEnd();
 }

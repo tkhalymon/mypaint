@@ -1,13 +1,18 @@
 #ifndef __VERTEX_HPP__
 #define __VERTEX_HPP__
 
+#include <GL/glut.h>
+
 class Vertex
 {
 public:
 	Vertex(int x, int y);
 	~Vertex();
 
-	operator const int*() const;
+	int& x();
+	int& y();
+
+	void glVertex();
 
 private:
 

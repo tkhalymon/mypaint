@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 2.8)
 
-file(GLOB SOURCE_FILES "src/*.cpp" "src/picture/*.cpp" "src/picture/actions/*.cpp" "src/picture/graphics/*.cpp")
+file(GLOB SOURCE_FILES "src/*.cpp" "src/picture/*.cpp" "src/picture/actions/*.cpp"
+	"src/picture/graphics/*.cpp" "src/tools/*.cpp" "src/palette/*.cpp")
 add_executable (mypaint ${SOURCE_FILES})
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
