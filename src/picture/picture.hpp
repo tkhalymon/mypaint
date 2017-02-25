@@ -5,11 +5,10 @@
 #include <memory>
 #include <GL/glut.h>
 
-#include "../window.hpp"
+#include "../window/window.hpp"
 
 // all figures
 #include "graphics/line.hpp"
-#include "../tools/vertex.hpp"
 #include "graphics/pencil.hpp"
 #include "graphics/ellipse.hpp"
 
@@ -23,6 +22,7 @@ using std::make_shared;
 class Picture : public Window
 {
 public:
+	// window size and title
 	Picture(int width, int height, const char* title);
 	~Picture();
 
@@ -40,6 +40,8 @@ public:
 	virtual void keyPress(unsigned char key, Vertex mousePos);
 	// keyboard special key press (F1-F12, Arrows, etc.)
 	virtual void keyPressSpecial(int key, Vertex mousePos);
+	// calls when user changes window size
+	virtual void reshape (int newWidth, int newHeight);
 
 	bool undo();
 

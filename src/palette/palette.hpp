@@ -3,7 +3,7 @@
 
 #include <GL/glut.h>
 
-#include "../window.hpp"
+#include "../window/window.hpp"
 
 class Palette : public Window
 {

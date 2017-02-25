@@ -37,6 +37,14 @@ void Picture::display()
 	{
 		(*i)->render();
 	}
+	glBegin(GL_POINTS);
+	for (int i = -1; i <= height  * 3; ++i)
+	{
+		glVertex2d(100 + (i % 3) * 6, i);
+	}
+	glVertex2d(50, 1);
+	glVertex2d(50, 480);
+	glEnd();
 	glFlush();
 }
 
@@ -89,4 +97,22 @@ void Picture::keyPress(unsigned char key, Vertex mousePos)
 void Picture::keyPressSpecial(int key, Vertex mousePos)
 {
 	
+}
+
+void Picture::reshape (int newWidht, int newHeight)
+{
+	// check if new size not less then minimal
+	// Size2d size(width, height);
+	// if (newSize.width() < minSize.width())
+	// {
+	// 	newSize.setWidth(minSize.width());
+	// }
+	// if (newSize.height() < minSize.height())
+	// {
+	// 	newSize.setHeight(minSize.height());
+	// }
+	// if (newSize == Size2d(newSize.width(), newSize.height()))
+	// {
+	// 	glutReshapeWindow(newSize.width(), newSize.height());
+	// }
 }

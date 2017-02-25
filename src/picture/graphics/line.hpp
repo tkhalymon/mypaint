@@ -6,7 +6,6 @@
 class Line;
 
 #include "figure.hpp"
-#include "../../tools/position.hpp"
 
 class Line : public Figure
 {

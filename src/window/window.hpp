@@ -6,8 +6,8 @@
 #include <map>
 #include <string>
 
-#include "tools/vertex.hpp"
-#include "tools/size2d.hpp"
+#include "../picture/graphics/vertex.hpp"
+#include "../picture/graphics/color.hpp"
 
 using std::string;
 using std::map;
@@ -24,7 +24,7 @@ class Window;
 class Window
 {
 public:
-	// Window constructor: window size (x; y) and title
+	// Window constructor: window size (width; height), window title, background color
 	Window(int width, int height, const char* title);
 	virtual ~Window();
 
@@ -43,13 +43,18 @@ public:
 	virtual void keyPress(unsigned char key, Vertex mousePos) = 0;
 	// keyboard special key press (F1-F12, Arrows, etc.)
 	virtual void keyPressSpecial(int key, Vertex mousePos) = 0;
-	// set window background
-	void setBgColor(double red, double green, double blue);
+	// calls when user changes window size
+	virtual void reshape(int width, int height) = 0;
 
-protected:
+	// set window background color
+	void setBgColor(float red, float green, float blue);
+
+	void setMinSize(int width, int height);
+
+private:
 
 	// initialize GLUT
-	static int Init();
+	static bool Init();
 
 	// initialization status
 	static bool initialized;
@@ -66,8 +71,8 @@ protected:
 	static void glutKeyPress(unsigned char key, int x, int y);
 	// key - one of special keys (defined as GLUT_KEY_{name})
 	static void glutKeyPressSpecial(int key, int x, int y);
-
-private:
+	// (w, h) - new window size
+	static void glutReshape(int w, int h);
 
 	// list of all existing windows (int is a GLUT window ID)
 	static map<int, Window*> windows;
@@ -75,8 +80,15 @@ private:
 	// window ID
 	int id;
 
+protected: // available for inherited classes
+
 	// window size
-	Size2d size;
+	int width;
+	int height;
+
+	// minimal window size
+	int minWidth;
+	int minHeight;
 };
 
 #endif // __WINDOW_HPP__

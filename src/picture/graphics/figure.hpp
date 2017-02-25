@@ -5,7 +5,7 @@
 
 class Figure;
 
-#include "../../tools/vertex.hpp"
+#include "vertex.hpp"
 #include "color.hpp"
 
 class Figure

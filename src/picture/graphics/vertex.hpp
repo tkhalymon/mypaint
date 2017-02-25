@@ -20,6 +20,7 @@ public:
 	const double& x() const;
 	const double& y() const;
 
+	// are coordinates proportional
 	bool proportional(Vertex);
 
 	// convert to array operator
@@ -32,7 +33,10 @@ public:
 
 private:
 
+	// coordinates
 	double data[2];
+
+	// indexes of coordinates in array
 	static const int x_index;
 	static const int y_index;
 };

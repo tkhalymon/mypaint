@@ -5,21 +5,24 @@ bool Window::initialized = Window::Init();
 // 
 map<int, Window*> Window::windows;
 
-int Window::Init()
+bool Window::Init()
 {
-	// passing no arguments
-	int argc = 0;
-	// global GLUT initialization
-	glutInit(&argc, NULL);
-	// enable single buffering and RGB color scheme
-	glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB );
-	return 0;
+	if (!initialized)
+	{
+		// passing no arguments
+		int argc = 0;
+		// global GLUT initialization
+		glutInit(&argc, NULL);
+		// enable single buffering and RGB color scheme
+		glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB );
+	}
+	return true;
 }
 
-Window::Window(int width, int height, const char* title) : size(width, height)
+Window::Window(int width, int height, const char* title) : width(width), height(height)
 {
 	// set window size
-	glutInitWindowSize(size.width(), size.height());
+	glutInitWindowSize(width, height);
 	// create window and get it's ID
 	id = glutCreateWindow(title);
 	// set current matrix
@@ -27,9 +30,9 @@ Window::Window(int width, int height, const char* title) : size(width, height)
 	// reset matrix to default state
 	glLoadIdentity();
 	// set coordinate system form left to right by X and from top to bottom by Y
-	glOrtho(0, size.width(), size.height(), 0, 0, 1);
-	// set window background color
-	glClearColor(0.3, 0.3, 0.3, 1);
+	glOrtho(1, width, height, 1, 0, 1);
+	// set window background color to black
+	glClearColor(0, 0, 0, 1);
 	// set GLUT callbacks
 	glutDisplayFunc(glutDisplay);
 	glutMouseFunc(glutMousePress);
@@ -37,6 +40,7 @@ Window::Window(int width, int height, const char* title) : size(width, height)
 	glutMotionFunc(glutMousePressMove);
 	glutKeyboardFunc(glutKeyPress);
 	glutSpecialFunc(glutKeyPressSpecial);
+	glutReshapeFunc(glutReshape);
 	// clear window
 	glClear(GL_COLOR_BUFFER_BIT);
 	// write changes to graphic buffer
@@ -51,9 +55,16 @@ Window::~Window()
 	windows.erase(windows.find(id));
 }
 
-void Window::setBgColor(double red, double green, double blue)
+void Window::setBgColor(float red, float green, float blue)
 {
+	// RGB scheme, 1 is alpha channel
 	glClearColor(red, green, blue, 1);
+}
+
+void Window::setMinSize(int width, int height)
+{
+	minWidth = width;
+	minHeight = height;
 }
 
 /*
@@ -87,11 +98,21 @@ void Window::glutMousePressMove(int x, int y)
 
 void Window::glutKeyPress(unsigned char key, int x, int y)
 {
-	if (key == 27) exit(0);
+	if (key == 27)
+	{
+		glutDestroyWindow(glutGetWindow());
+		exit(0);
+	}
+	// windows.erase(glutGetWindow());
 	windows[glutGetWindow()]->keyPress(key, Vertex(x, y));
 }
 
 void Window::glutKeyPressSpecial(int key, int x, int y)
 {
 	windows[glutGetWindow()]->keyPressSpecial(key, Vertex(x, y));
+}
+
+void Window::glutReshape(int width, int height)
+{
+	windows[glutGetWindow()]->reshape(width, height);
 }
