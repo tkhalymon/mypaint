@@ -1,6 +1,7 @@
 #include "picture.hpp"
 
-Picture::Picture(const int& width, const int& height, const char* title) : Window (width, height, title)
+Picture::Picture(const int& width, const int& height, const char* title)
+		: Window (width, height, title)
 {
 	lineWidth = 5;
 	activeColor = make_shared<Color>(0, 0, 0);

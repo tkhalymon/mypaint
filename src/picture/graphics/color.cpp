@@ -4,7 +4,7 @@ const int Color::red_index = 0;
 const int Color::green_index = 1;
 const int Color::blue_index = 2;
 
-Color::Color(float red, float green, float blue) : data{red, green, blue}
+Color::Color(const float& red, const float& green, const float& blue) : data{red, green, blue}
 {}
 
 Color::Color(const Color& c)
@@ -18,7 +18,7 @@ Color::Color(const Color& c)
 Color::~Color()
 {}
 
-void Color::set(float red, float green, float blue)
+void Color::set(const float& red, const float& green, const float& blue)
 {
 	data[red_index] = red;
 	data[green_index] = green;

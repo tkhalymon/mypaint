@@ -52,10 +52,15 @@ public:
 
 private:
 
+	// all rendered figures
 	vector<shared_ptr<Figure>> figures;
+	// vector of actions
 	vector<shared_ptr<Action>> actions;
+	// vector of undone actions (used to revert undo actions)
 	vector<shared_ptr<Action>> undoneActs;
+	// current drawing color
 	shared_ptr<Color> activeColor;
+	// current line width
 	int lineWidth;
 };
 

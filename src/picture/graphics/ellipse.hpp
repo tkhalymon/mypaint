@@ -23,16 +23,19 @@ class Ellipse : public Figure
 public:
 	Ellipse(Vertex center, Color c, int lineWidth);
 	~Ellipse();
-
+	// draw
 	void render();
-
+	// handle new mouse vertex
 	void mouseMoved(const Vertex& v);
 
 private:
 
+	// coordinates of center
 	Vertex center;
+	// x and y radiuses
 	Vertex radius;
+	// line width
 	int lineWidth;
 };
 
-#endif
+#endif // __ELLIPSE_HPP__

@@ -6,19 +6,19 @@
 class Color
 {
 public:
-	Color(float red, float green, float blue);
+	Color(const float& red, const float& green, const float& blue);
+	// copy constructor
 	Color(const Color&);
 	~Color();
-
 	// set new color
-	void set(float red, float green, float blue);
-
+	void set(const float& red, const float& green, const float& blue);
 	// set as current
 	void bind() const;
-
 private:
 
+	// color data
 	float data[3];
+	// components indexes in array
 	static const int red_index;
 	static const int green_index;
 	static const int blue_index;

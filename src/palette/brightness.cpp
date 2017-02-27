@@ -5,7 +5,8 @@ Brightness::Brightness(shared_ptr<int> width, int height, int offset, shared_ptr
 {
 	lightColor = shade;
 	color = make_shared<Color>(*shade);
-	value = *width - 2 * padding - 2;
+	// set default value to 
+	value = *width - 2 * padding - 1;
 }
 
 Brightness::~Brightness()
