@@ -3,7 +3,7 @@
 const int Vertex::x_index = 0;
 const int Vertex::y_index = 1;
 
-Vertex::Vertex(int x, int y)
+Vertex::Vertex(const double& x, const double& y)
 {
 	data[x_index] = x;
 	data[y_index] = y;
@@ -12,17 +12,17 @@ Vertex::Vertex(int x, int y)
 Vertex::~Vertex()
 {}
 
-void Vertex::x(double value)
+void Vertex::x(const double& value)
 {
 	data[x_index] = value;
 }
 
-void Vertex::y(double value)
+void Vertex::y(const double& value)
 {
 	data[y_index] = value;
 }
 
-void Vertex::set (double x, double y)
+void Vertex::set (const double& x, const double& y)
 {
 	data[x_index] = x;
 	data[y_index] = y;
@@ -69,9 +69,14 @@ Vertex::operator double const* () const
 	return data;
 }
 
-Vertex Vertex::operator - (Vertex v) const
+Vertex Vertex::operator - (const Vertex& v) const
 {
 	return Vertex(v.data[x_index] - data[x_index], v.data[y_index] - data[y_index]);
+}
+
+Vertex Vertex::operator + (const Vertex& v) const
+{
+	return Vertex(v.data[x_index] + data[x_index], v.data[y_index] + data[y_index]);
 }
 
 void Vertex::glVertex()

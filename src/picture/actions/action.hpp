@@ -10,12 +10,20 @@ using std::shared_ptr;
 class Action
 {
 public:
-	Action();
+	enum Type { Create, Delete };
+
+	Action(shared_ptr<Figure> pFigure, Type t);
 	~Action();
 
-private:
+	Type type();
 
-	shared_ptr<Figure> figure;
+	shared_ptr<Figure> figure();
+
+private:
+	// pointer to affected figure
+	shared_ptr<Figure> affectedFigure;
+	// action type
+	Type actType;
 };
 
 #endif // __ACTION_HPP__

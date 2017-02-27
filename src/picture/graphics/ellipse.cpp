@@ -1,6 +1,6 @@
 #include "ellipse.hpp"
 
-Ellipse::Ellipse(Vertex center, Color c, int lineWidth) : Figure(c, lineWidth), center(center)
+Ellipse::Ellipse(Vertex center, Color c, int lineWidth) : Figure(c), center(center), radius(0, 0), lineWidth(lineWidth)
 {
 
 }
@@ -12,17 +12,20 @@ Ellipse::~Ellipse()
 
 void Ellipse::render()
 {
-	bindColor();
+	color.bind();
+	glLineWidth(lineWidth);
 	glBegin(GL_LINE_LOOP);
-	for (double angle = 0; angle < 2 * M_PI; angle += 10 / (abs(radiusX) + abs(radiusY) + 5.))
+	for (double angle = 0; angle < 2 * M_PI; angle += 2. * M_PI / (double)(10 + (abs(radius.x()) + abs(radius.y())) / 10))
 	{
-		glVertex2d(center.x() + radiusX / 2 + cos(angle) * radiusX / 2, center.y() + radiusY / 2 + sin(angle) * radiusY / 2);
+		glVertex2d(center.x() + cos(angle) * radius.x(), center.y() + sin(angle) * radius.y());
 	}
 	glEnd();
 }
 
-void Ellipse::mouseVertex(const Vertex& v)
+void Ellipse::mouseMoved(const Vertex& position)
 {
-	radiusX = v.x() - center.x();
-	radiusY = v.y() - center.y();
+	Vertex topLeft = Vertex(center.x() - radius.x(), center.y() - radius.y());
+	radius.x((position.x() - topLeft.x()) / 2);
+	radius.y((position.y() - topLeft.y()) / 2);
+	center = Vertex(topLeft.x() + radius.x(), topLeft.y() + radius.y());
 }

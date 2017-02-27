@@ -11,6 +11,7 @@
 #include "graphics/line.hpp"
 #include "graphics/pencil.hpp"
 #include "graphics/ellipse.hpp"
+#include "graphics/rectangle.hpp"
 
 // for action history
 #include "actions/action.hpp"
@@ -23,34 +24,37 @@ class Picture : public Window
 {
 public:
 	// window size and title
-	Picture(int width, int height, const char* title);
+	Picture(const int& width, const int& height, const char* title);
 	~Picture();
 
 	// void saveState();
 
 	// rendering function
-	virtual void display();
+	void display();
 	// mouse button pressing
-	virtual void mousePress(int button, int state, Vertex mousePos);
+	void mousePress(const int& button, const int& state, const Vertex& mousePos);
 	// mouse moving
-	virtual void mouseMove(Vertex mousePos);
+	void mouseMove(const Vertex& mousePos);
 	// mouse moving with buttons pressed (drag)
-	virtual void mousePressMove(Vertex mousePos);
+	void mousePressMove(const Vertex& mousePos);
 	// keyboard key press
-	virtual void keyPress(unsigned char key, Vertex mousePos);
+	void keyPress(unsigned char key, const Vertex& mousePos);
 	// keyboard special key press (F1-F12, Arrows, etc.)
-	virtual void keyPressSpecial(int key, Vertex mousePos);
+	void keyPressSpecial(const int& key, const Vertex& mousePos);
 	// calls when user changes window size
-	virtual void reshape (int newWidth, int newHeight);
-
+	void reshape (const int& newWidth, const int& newHeight);
+	// undo last action
 	bool undo();
-
+	// undo last undo
 	bool redo();
+	// shared pointer to color for palette
+	shared_ptr<Color> colorPtr();
 
 private:
 
 	vector<shared_ptr<Figure>> figures;
-	vector<Action> actions;
+	vector<shared_ptr<Action>> actions;
+	vector<shared_ptr<Action>> undoneActs;
 	shared_ptr<Color> activeColor;
 	int lineWidth;
 };

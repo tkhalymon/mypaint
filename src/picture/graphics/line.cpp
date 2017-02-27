@@ -1,6 +1,6 @@
 #include "line.hpp"
 
-Line::Line(Vertex start, Color c, int lineWidth) : Figure(c, lineWidth), start(start), end(start)
+Line::Line(Vertex start, Color c, int width) : Figure(c), start(start), end(start), width(width)
 {}
 
 Line::~Line()
@@ -10,14 +10,16 @@ Line::~Line()
 
 void Line::render()
 {
-	bindColor();
+	color.bind();
+	glLineWidth(width);
 	glBegin(GL_LINES);
 	start.glVertex();
 	end.glVertex();
 	glEnd();
 }
 
-void Line::mouseVertex(const Vertex& v)
+void Line::mouseMoved(const Vertex& position)
 {
-	end = v;
+	end = position;
+	glutPostRedisplay();
 }

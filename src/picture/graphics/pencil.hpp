@@ -18,7 +18,7 @@ public:
 
 	void render();
 
-	void mouseVertex(const Vertex& v);
+	void mouseMoved(const Vertex& v);
 
 	int size (){return points.size();}
 

@@ -7,13 +7,8 @@
 int main(int argc, char *argv[])
 {
 	Picture picture(640, 480, "My Paint");
-	// Palette palette(640, 480, "Palette");
+	picture.setBgColor(1, 1, 1);
+	Palette palette(300, 230, "Palette", picture.colorPtr());
 	glutMainLoop();
 	return 0;
-}
-
-void display()
-{
-	glClear(GL_COLOR_BUFFER_BIT);
-	glutSwapBuffers();
 }

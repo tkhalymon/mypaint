@@ -5,7 +5,16 @@ class Ellipse;
 
 #include <math.h>
 
+// to use math PI constant
 #define _USE_MATH_DEFINES
+
+/*
+	class Ellipse
+
+	Round geometric figure with two radiuses
+*/
+
+class Ellipse;
 
 #include "figure.hpp"
 
@@ -17,15 +26,13 @@ public:
 
 	void render();
 
-	void mouseVertex(const Vertex& v);
+	void mouseMoved(const Vertex& v);
 
 private:
 
 	Vertex center;
-	int radiusX;
-	int radiusY;
+	Vertex radius;
 	int lineWidth;
-
 };
 
 #endif

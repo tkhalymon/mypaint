@@ -15,12 +15,15 @@ public:
 
 	void render();
 
-	void mouseVertex(const Vertex& v);
+	void mouseMoved(const Vertex& v);
 
 private:
 
+	// coordinates of line ends
 	Vertex start;
 	Vertex end;
+
+	int width;
 };
 
 #endif // __LINE_HPP__

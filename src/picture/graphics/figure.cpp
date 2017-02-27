@@ -1,13 +1,7 @@
 #include "figure.hpp"
 
-Figure::Figure(Color color, int lineWidth) : color (color), lineWidth(lineWidth)
+Figure::Figure(Color color) : color (color)
 {}
 
 Figure::~Figure()
 {}
-
-void Figure::bindColor()
-{
-	color.bind();
-	glLineWidth(lineWidth);
-}

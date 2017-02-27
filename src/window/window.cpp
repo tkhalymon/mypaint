@@ -2,8 +2,9 @@
 
 // initialize static fields of Window
 bool Window::initialized = Window::Init();
-// 
+
 map<int, Window*> Window::windows;
+// map<int, std::shared_ptr<Window>> Window::windows;
 
 bool Window::Init()
 {
@@ -13,14 +14,16 @@ bool Window::Init()
 		int argc = 0;
 		// global GLUT initialization
 		glutInit(&argc, NULL);
-		// enable single buffering and RGB color scheme
-		glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB );
+		// enable double buffering and RGB color scheme
+		glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB );
 	}
 	return true;
 }
 
-Window::Window(int width, int height, const char* title) : width(width), height(height)
+Window::Window(const int& width, const int& height, const char* title)
 {
+	this->width = make_shared<int>(width);
+	this->height = make_shared<int>(height);
 	// set window size
 	glutInitWindowSize(width, height);
 	// create window and get it's ID
@@ -55,13 +58,13 @@ Window::~Window()
 	windows.erase(windows.find(id));
 }
 
-void Window::setBgColor(float red, float green, float blue)
+void Window::setBgColor(const float& red, const float& green, const float& blue)
 {
 	// RGB scheme, 1 is alpha channel
 	glClearColor(red, green, blue, 1);
 }
 
-void Window::setMinSize(int width, int height)
+void Window::setMinSize(const int& width, const int& height)
 {
 	minWidth = width;
 	minHeight = height;
@@ -100,10 +103,18 @@ void Window::glutKeyPress(unsigned char key, int x, int y)
 {
 	if (key == 27)
 	{
-		glutDestroyWindow(glutGetWindow());
-		exit(0);
+		int winId = glutGetWindow();
+		glutDestroyWindow(winId);
+		windows.erase(winId);
+		if (windows.empty())
+		{
+			exit(0);
+		}
+		else
+		{
+			glutSetWindow(windows.begin()->first);
+		}
 	}
-	// windows.erase(glutGetWindow());
 	windows[glutGetWindow()]->keyPress(key, Vertex(x, y));
 }
 
@@ -114,5 +125,13 @@ void Window::glutKeyPressSpecial(int key, int x, int y)
 
 void Window::glutReshape(int width, int height)
 {
+	// width = std::min(width, minWidth);
+	// height = std::min(height, minHeight);
+	windows[glutGetWindow()]->checkMinSize(width, height);
 	windows[glutGetWindow()]->reshape(width, height);
+}
+
+bool Window::checkMinSize(const int &width, const int &height)
+{
+	return width >= minWidth && height >= minHeight;
 }

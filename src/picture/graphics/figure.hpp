@@ -3,6 +3,13 @@
 
 #include <GL/glut.h>
 
+/*
+	class Figure
+
+	Abstract Base for geometric figure
+	by default it has only color.
+*/
+
 class Figure;
 
 #include "vertex.hpp"
@@ -11,19 +18,23 @@ class Figure;
 class Figure
 {
 public:
-	Figure(Color c, int lineWidth);
+	// each figure has color
+	Figure(Color c);
+
 	virtual ~Figure();
 
+	// renders a complete figure
 	virtual void render() = 0;
 
-	void bindColor();
+	// called when this object is in creation progress
+	virtual void mouseMoved(const Vertex& v) = 0;
 
-	virtual void mouseVertex(const Vertex& v) = 0;
+protected:
 
-private:
-
+	// figure color
 	Color color;
-	int lineWidth;
+	// is figure selected
+	bool isSelected;
 };
 
 #endif // __FIGURE_HPP__

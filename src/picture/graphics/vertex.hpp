@@ -6,15 +6,15 @@
 class Vertex
 {
 public:
-	Vertex(int x, int y);
+	Vertex(const double& x, const double& y);
 	~Vertex();
 
 	// setters
-	void x(double value);
-	void y(double value);
+	void x(const double& value);
+	void y(const double& value);
 
 	// set both values
-	void set (double x, double y);
+	void set (const double& x, const double& y);
 
 	// getters
 	const double& x() const;
@@ -26,7 +26,8 @@ public:
 	// convert to array operator
 	operator double const* () const;
 
-	Vertex operator - (Vertex) const;
+	Vertex operator - (const Vertex&) const;
+	Vertex operator + (const Vertex&) const;
 
 	// render as OpenGL vertex
 	void glVertex();

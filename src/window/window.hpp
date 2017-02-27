@@ -3,14 +3,18 @@
 
 // GLUT (OpenGL header)
 #include <GL/glut.h>
-#include <map>
+#include <memory>
 #include <string>
+#include <map>
+#include <memory>
+
+using std::shared_ptr;
+using std::make_shared;
+using std::string;
+using std::map;
 
 #include "../picture/graphics/vertex.hpp"
 #include "../picture/graphics/color.hpp"
-
-using std::string;
-using std::map;
 
 class Window;
 
@@ -21,11 +25,11 @@ class Window;
 	only static methods to GLUT.
 */
 
-class Window
+class Window : public std::enable_shared_from_this<Window>
 {
 public:
 	// Window constructor: window size (width; height), window title, background color
-	Window(int width, int height, const char* title);
+	Window(const int& width, const int& height, const char* title);
 	virtual ~Window();
 
 	// ### Derived classes callbacks ###
@@ -34,31 +38,31 @@ public:
 
 	// ### mouse and keyboard event handlers ###
 	// mouse button pressing
-	virtual void mousePress(int button, int state, Vertex mousePos) = 0;
+	virtual void mousePress(const int& button, const int& state, const Vertex& mousePos) = 0;
 	// mouse moving
-	virtual void mouseMove(Vertex mousePos) = 0;
+	virtual void mouseMove(const Vertex& mousePos) = 0;
 	// mouse moving with buttons pressed (drag)
-	virtual void mousePressMove(Vertex mousePos) = 0;
+	virtual void mousePressMove(const Vertex& mousePos) = 0;
 	// keyboard key press
-	virtual void keyPress(unsigned char key, Vertex mousePos) = 0;
+	virtual void keyPress(unsigned char key, const Vertex& mousePos) = 0;
 	// keyboard special key press (F1-F12, Arrows, etc.)
-	virtual void keyPressSpecial(int key, Vertex mousePos) = 0;
+	virtual void keyPressSpecial(const int& key, const Vertex& mousePos) = 0;
 	// calls when user changes window size
-	virtual void reshape(int width, int height) = 0;
+	virtual void reshape(const int& width, const int& height) = 0;
 
 	// set window background color
-	void setBgColor(float red, float green, float blue);
-
-	void setMinSize(int width, int height);
+	void setBgColor(const float& red, const float& green, const float& blue);
+	// set minimal window size
+	void setMinSize(const int& width, const int& height);
+	// close current window
+	void close();
 
 private:
 
 	// initialize GLUT
 	static bool Init();
-
 	// initialization status
 	static bool initialized;
-	
 	// global GLUT callbacks
 	static void glutDisplay();
 	// button {left, right, middle}, state {pressed, released}, (x, y) - mouse position
@@ -71,23 +75,26 @@ private:
 	static void glutKeyPress(unsigned char key, int x, int y);
 	// key - one of special keys (defined as GLUT_KEY_{name})
 	static void glutKeyPressSpecial(int key, int x, int y);
-	// (w, h) - new window size
-	static void glutReshape(int w, int h);
-
-	// list of all existing windows (int is a GLUT window ID)
-	static map<int, Window*> windows;
+	// (width, height) - new window size
+	static void glutReshape(int width, int height);
+	// check if new window size not less then minimal
+	bool checkMinSize(const int &width, const int &height);
 
 	// window ID
 	int id;
 
 protected: // available for inherited classes
 
+	// list of all existing windows (int is a GLUT window ID)
+	static map<int, Window*> windows;
+	// static map<int, std::shared_ptr<Window>> windows;
+
 	// window size
-	int width;
-	int height;
+	shared_ptr<int> width;
+	shared_ptr<int> height;
 
 	// minimal window size
-	int minWidth;
+	int minWidth; 
 	int minHeight;
 };
 

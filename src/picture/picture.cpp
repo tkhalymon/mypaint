@@ -1,34 +1,15 @@
 #include "picture.hpp"
 
-Picture::Picture(int width, int height, const char* title) : Window (width, height, title)
+Picture::Picture(const int& width, const int& height, const char* title) : Window (width, height, title)
 {
-	lineWidth = 2;
-	activeColor = make_shared<Color>(1, 1, 1);
+	lineWidth = 5;
+	activeColor = make_shared<Color>(0, 0, 0);
 }
 
 Picture::~Picture()
 {
 
 }
-
-// void Picture::saveState()
-// {
-// 	unsigned char* data = new unsigned char[3]; // rm -rf
-// 	// glReadPixels(x - 1, glutGet(GLUT_WINDOW_HEIGHT) - y, 2, 2, GL_RGBA, GL_UNSIGNED_BYTE, data); // rm -rf
-// 	// cerr << "(" << x << ":" << y << ") "; // rm -rf
-// 	for (int i = 0; i < 4; ++i) // rm -rf
-// 	{ // rm -rf
-// 		for (int k = 0; k < 4; ++k) // rm -rf
-// 		{ // rm -rf
-// 			cerr << (int)data[k + i * 4] << " "; // rm -rf
-// 		} // rm -rf
-// 		cerr << "\n"; // rm -rf
-// 	} // rm -rf
-// 	// Line by line // rm -rf
-// 	// 7  8  9 // rm -rf
-// 	// 4  5  6 // rm -rf
-// 	// 1  2  3 // rm -rf
-// }
 
 void Picture::display()
 {
@@ -37,69 +18,65 @@ void Picture::display()
 	{
 		(*i)->render();
 	}
-	glBegin(GL_POINTS);
-	for (int i = -1; i <= height  * 3; ++i)
-	{
-		glVertex2d(100 + (i % 3) * 6, i);
-	}
-	glVertex2d(50, 1);
-	glVertex2d(50, 480);
-	glEnd();
-	glFlush();
+	glutSwapBuffers();
 }
 
-void Picture::mousePress(int button, int state, Vertex mousePos)
+void Picture::mousePress(const int& button, const int& state, const Vertex& mousePos)
 {
-	// glutPostRedisplay();
 	if (state == GLUT_DOWN)
 	{
-		if (button == GLUT_LEFT_BUTTON)
+		switch (button)
 		{
+		case GLUT_LEFT_BUTTON:
 			figures.push_back(make_shared<Pencil>(mousePos, *activeColor, lineWidth));
-		}
-		if (button == GLUT_MIDDLE_BUTTON)
-		{
-			figures.push_back(make_shared<Ellipse>(mousePos, *activeColor, lineWidth));
-		}
-		if (button == GLUT_RIGHT_BUTTON)
-		{
+			break;
+		case GLUT_MIDDLE_BUTTON:
+			// figures.push_back(make_shared<Ellipse>(mousePos, *activeColor, lineWidth));
+			figures.push_back(make_shared<Rectangle>(mousePos, *activeColor, lineWidth));
+			break;
+		case GLUT_RIGHT_BUTTON:
 			figures.push_back(make_shared<Line>(mousePos, *activeColor, lineWidth));
+			break;
+		default:
+			break;
 		}
+		actions.push_back(make_shared<Action>(figures.back(), Action::Type::Create));
+		undoneActs.clear();
 	}
-	// display();
+	// glutPostRedisplay();
 }
 
-void Picture::mouseMove(Vertex mousePos)
+void Picture::mouseMove(const Vertex& mousePos)
 {
 
 }
 
-void Picture::mousePressMove(Vertex mousePos)
+void Picture::mousePressMove(const Vertex& mousePos)
 {
-	figures.back()->mouseVertex(mousePos);
+	figures.back()->mouseMoved(mousePos);
 	glutPostRedisplay();
+	// glutSwapBuffers();
 }
 
-void Picture::keyPress(unsigned char key, Vertex mousePos)
+void Picture::keyPress(unsigned char key, const Vertex& mousePos)
 {
 	switch(key)
 	{
 	case 8: // Backspace
-		if (figures.size() > 0)
-		{
-			figures.pop_back();
-			glutPostRedisplay();
-		}
+		undo();
+		break;
+	case 13:
+		redo();
 		break;
 	}
 }
 
-void Picture::keyPressSpecial(int key, Vertex mousePos)
+void Picture::keyPressSpecial(const int& key, const Vertex& mousePos)
 {
 	
 }
 
-void Picture::reshape (int newWidht, int newHeight)
+void Picture::reshape (const int& newWidht, const int& newHeight)
 {
 	// check if new size not less then minimal
 	// Size2d size(width, height);
@@ -115,4 +92,53 @@ void Picture::reshape (int newWidht, int newHeight)
 	// {
 	// 	glutReshapeWindow(newSize.width(), newSize.height());
 	// }
+}
+
+bool Picture::undo()
+{
+	if (actions.empty())
+	{
+		return false;
+	}
+	else
+	{
+		switch (actions.back()->type())
+		{
+		case Action::Type::Create:
+			undoneActs.push_back(actions.back());
+			figures.pop_back();
+			actions.pop_back();
+			break;
+		case Action::Type::Delete:
+			undoneActs.push_back(actions.back());
+			figures.push_back(actions.back()->figure());
+			actions.pop_back();
+			break;
+		};
+		glutPostRedisplay();
+		return true;
+
+	}
+		glutSetCursor(GLUT_CURSOR_CYCLE);
+}
+
+bool Picture::redo()
+{
+	if (undoneActs.empty())
+	{
+		return false;
+	}
+	else
+	{
+		figures.push_back(undoneActs.back()->figure());
+		actions.push_back(undoneActs.back());
+		undoneActs.pop_back();
+		glutPostRedisplay();
+		return true;
+	}
+}
+
+shared_ptr<Color> Picture::colorPtr()
+{
+	return activeColor;
 }
