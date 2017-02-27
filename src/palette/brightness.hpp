@@ -1,19 +1,27 @@
 #ifndef __BRIGHTNESS_HPP__
 #define __BRIGHTNESS_HPP__
 
-#include "toolbox.hpp"
+#include "scale.hpp"
 
-class Brightness : public Toolbox
+class Brightness;
+
+/*
+	class Brightness
+
+	selects color brom black to selected shade
+*/
+
+class Brightness : public Scale
 {
 public:
-	// shade is a color, from whitch the scale will start
+	// pointer to window width, scale height, distance from top (offset), pointer to color shade
 	Brightness(shared_ptr<int> width, int height, int offset, shared_ptr<Color> shade);
 	~Brightness();
+	// handles mouse click and drag (move pressed)
 	bool click(Vertex mouse);
+	// draw scale
 	void render();
-	void update();
-	shared_ptr<Color>& colorPtr();
-
+	
 private:
 	shared_ptr<Color> lightColor;
 };

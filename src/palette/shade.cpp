@@ -1,5 +1,6 @@
 #include "shade.hpp"
 
+// shade scale colors (red, green, blue, red)
 const double Shade::colors[4][3] = 
 {
 	{1, 0, 0},
@@ -8,16 +9,14 @@ const double Shade::colors[4][3] =
 	{1, 0, 0}
 };
 
-Shade::Shade(shared_ptr<int> width, int height, int offset) : Toolbox (width, height, offset)
+Shade::Shade(shared_ptr<int> width, int height, int offset) : Scale (width, height, offset)
 {
-	// default color is red
+	// default shade is red
 	color = make_shared<Color>(1, 0, 0);
 }
 
 Shade::~Shade()
-{
-
-}
+{}
 
 bool Shade::click (Vertex mouse)
 {
@@ -44,26 +43,29 @@ bool Shade::click (Vertex mouse)
 
 void Shade::render()
 {
+	// draw 3 parts of shade scale by triangles
 	glBegin(GL_TRIANGLE_STRIP);
 	for (int i = 0; i < 4; ++i)
 	{
+		// bind color
 		glColor3dv(colors[i]);
+		// draw 2 vertexes
 		glVertex2i(padding + (*width - padding * 2) * i / 3, offset + padding);
 		glVertex2i(padding + (*width - padding * 2) * i / 3, offset + padding + height);
 	}
+	// finish drawing
 	glEnd();
+	// draw frame
 	renderFrame();
+	// and current value pointer
 	renderArrow();
 }
+
 void Shade::update()
 {
+	// update scale when dependent scale changed
 	unsigned char pixels[3];
 	glReadPixels(padding + value, glutGet(GLUT_WINDOW_HEIGHT) - offset - padding - 2, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 	*color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
 	glutPostRedisplay();
-}
-
-shared_ptr<Color>& Shade::colorPtr()
-{
-	return color;
 }

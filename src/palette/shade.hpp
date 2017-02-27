@@ -6,19 +6,23 @@
 using std::shared_ptr;
 using std::make_shared;
 
-#include "toolbox.hpp"
+#include "scale.hpp"
 
 // shade of color
 
-class Shade : public Toolbox
+class Shade : public Scale
 {
 public:
 	// constructor, which takes parameters 
 	Shade(shared_ptr<int> width, int height, int offset);
 	~Shade();
+	// mouse click event
 	bool click(Vertex mouse);
+	// draw
 	void render();
+	// update scale, when dependent scales changes
 	void update();
+	// shared pointer to color selected on scale
 	shared_ptr<Color>& colorPtr();
 private:
 

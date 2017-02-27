@@ -1,5 +1,6 @@
 #include "rectangle.hpp"
 
+// set top left corner of rectangle, color and line width
 Rectangle::Rectangle(Vertex topLeft, Color c, int lineWidth)
 		: Figure(c), topLeft(topLeft), botRight(0, 0), lineWidth(lineWidth), filled(false)
 {
@@ -9,10 +10,13 @@ Rectangle::Rectangle(Vertex topLeft, Color c, int lineWidth)
 Rectangle::~Rectangle()
 {}
 
-void Rectangle::render()
+void Rectangle::render() const
 {
+	// set color
 	color.bind();
+	// set line width
 	glLineWidth(lineWidth);
+	// draw, regardless of filling enabled / disabled
 	if (filled)
 	{
 		// filled square
@@ -31,6 +35,7 @@ void Rectangle::render()
 	botRight.glVertex();
 	// top right
 	glVertex2i(botRight.x(), topLeft.y());
+	// finish drawing
 	glEnd();
 }
 

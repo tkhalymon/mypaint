@@ -20,7 +20,7 @@ public:
 	Rectangle(Vertex center, Color c, int lineWidth);
 	~Rectangle();
 	// draw
-	void render();
+	void render() const;
 	// submit new mouse vertex
 	void mouseMoved(const Vertex& v);
 
@@ -28,7 +28,9 @@ private:
 	// corner vertexes
 	Vertex topLeft;
 	Vertex botRight;
+	// line width
 	int lineWidth;
+	// is rectangle filled, or it's just line loop
 	bool filled;
 };
 

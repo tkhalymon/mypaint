@@ -18,16 +18,17 @@ class Figure;
 class Figure
 {
 public:
-	// each figure has color
+	// figure color
 	Figure(Color c);
-
 	virtual ~Figure();
-
 	// renders a complete figure
-	virtual void render() = 0;
-
+	virtual void render() const = 0;
 	// called when this object is in creation progress
 	virtual void mouseMoved(const Vertex& v) = 0;
+	// finish figure creation
+	void finish();
+	// is completely created
+	bool finished();
 
 protected:
 
@@ -35,6 +36,8 @@ protected:
 	Color color;
 	// is figure selected
 	bool isSelected;
+	// is creation finished
+	bool isFinished;
 };
 
 #endif // __FIGURE_HPP__

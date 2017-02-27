@@ -1,12 +1,17 @@
 #include "brightness.hpp"
 
+// pointer to window width, scale height, distance from top (offset), pointer to color shade
 Brightness::Brightness(shared_ptr<int> width, int height, int offset, shared_ptr<Color> shade)
-		: Toolbox (width, height, offset)
+		: Scale (width, height, offset)
 {
+	// scale beginning color
 	lightColor = shade;
+	// create a resulting color
 	color = make_shared<Color>(*shade);
-	// set default value to 
-	value = *width - 2 * padding - 1;
+	// set current color to black
+	*color = Color(0, 0, 0);
+	// set default value to left side of a scale
+	value = 1;
 }
 
 Brightness::~Brightness()
@@ -16,13 +21,20 @@ Brightness::~Brightness()
 
 bool Brightness::click (Vertex mouse)
 {
+	// if mouse position is inside of a scale
 	if (mouse.x() >= padding && mouse.x() < *width - padding
 	    && mouse.y() >= offset + padding && mouse.y() < offset + padding + height)
 	{
+		// set scale current value
 		value = mouse.x() - padding;
-		unsigned char pixels[3];
-		glReadPixels(mouse.x(), glutGet(GLUT_WINDOW_WIDTH) - mouse.y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-		*color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
+		// array to store color (RGB)
+		unsigned char pixel[3];
+		// get color from screen mouse.x() - x to start from glutGet(GLUT_WINDOW_WIDTH) - mouse.y() - y to start
+		// from (width - y, because OpenGL counts from bottom of the window). 1, 1 - area size, GL_RB - color
+		// scheme, GL_UNSIGNED_BYTE - return type, pixel - array to write to
+		glReadPixels(mouse.x(), glutGet(GLUT_WINDOW_WIDTH) - mouse.y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel);
+		// set color form pixel data array
+		*color = Color(pixel[0] / 255., pixel[1] / 255., pixel[2] / 255.);
 		return true;
 	}
 	else
@@ -33,27 +45,20 @@ bool Brightness::click (Vertex mouse)
 
 void Brightness::render()
 {
-	glBegin(GL_TRIANGLE_STRIP);
+	// draw a filled square
+	glBegin(GL_QUADS);
+	// start from black
 	glColor3d(0, 0, 0);
 	glVertex2i(padding, offset + padding);
 	glVertex2i(padding, offset + padding + height);
+	// and to clean shade
 	lightColor->bind();
-	glVertex2i(*width - padding, offset + padding);
 	glVertex2i(*width - padding, offset + padding + height);
+	glVertex2i(*width - padding, offset + padding);
+	// finish drawing
 	glEnd();
+	// draw frame
 	renderFrame();
+	// and current value pointer as arrow
 	renderArrow();
-}
-
-void Brightness::update()
-{
-	unsigned char pixels[3];
-	glReadPixels(padding + value, glutGet(GLUT_WINDOW_HEIGHT) - offset - padding - 2, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-	*color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
-	glutPostRedisplay();
-}
-
-shared_ptr<Color>& Brightness::colorPtr()
-{
-	return color;
 }

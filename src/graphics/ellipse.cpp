@@ -7,7 +7,7 @@ Ellipse::Ellipse(Vertex center, Color c, int lineWidth)
 Ellipse::~Ellipse()
 {}
 
-void Ellipse::render()
+void Ellipse::render() const
 {
 	// set color
 	color.bind();

@@ -1,9 +1,9 @@
 #include "lightness.hpp"
 
-Lightness::Lightness(shared_ptr<int> width, int height, int offset, shared_ptr<Color> brightness, shared_ptr<Color> final)
-		: Toolbox (width, height, offset)
+Lightness::Lightness(shared_ptr<int> width, int height, int offset, shared_ptr<Color> start, shared_ptr<Color> final)
+		: Scale (width, height, offset)
 {
-	darkColor = brightness;
+	startColor = start;
 	color = final;
 }
 
@@ -32,7 +32,7 @@ bool Lightness::click (Vertex mouse)
 void Lightness::render()
 {
 	glBegin(GL_TRIANGLE_STRIP);
-	darkColor->bind();
+	startColor->bind();
 	glVertex2i(padding, offset + padding);
 	glVertex2i(padding, offset + padding + height - 1);
 	glColor3d(1, 1, 1);
@@ -41,17 +41,4 @@ void Lightness::render()
 	glEnd();
 	renderFrame();
 	renderArrow();
-}
-
-void Lightness::update()
-{
-	unsigned char pixels[3];
-	glReadPixels(padding + value, glutGet(GLUT_WINDOW_HEIGHT) - offset - padding - 1, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-	*color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
-	glutPostRedisplay();
-}
-
-shared_ptr<Color>& Lightness::colorPtr()
-{
-	return color;
 }

@@ -8,22 +8,27 @@ using std::list;
 
 class Pencil;
 
+/*
+	class Pencil
+
+	Incstrument that draws a curve, folowing mouse position
+*/
+
 #include "figure.hpp"
 
 class Pencil : public Figure
 {
 public:
-	Pencil(Vertex start, Color c, int lineWidth);
+	// set first vertex and color
+	Pencil(Vertex start, Color c);
 	~Pencil();
-
-	void render();
-
+	// draw
+	void render() const;
+	// handle mouse moving (in pressed state)
 	void mouseMoved(const Vertex& v);
 
-	int size (){return points.size();}
-
 private:
-
+	// all vertexes
 	list<Vertex> points;
 };
 

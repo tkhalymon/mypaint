@@ -5,7 +5,7 @@
 
 using std::shared_ptr;
 
-#include "../graphics/figure.hpp"
+#include "../../graphics/figure.hpp"
 
 class Action
 {

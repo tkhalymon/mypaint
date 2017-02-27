@@ -1,25 +1,31 @@
 #include "pencil.hpp"
 
-Pencil::Pencil(Vertex start, Color c, int lineWidth) : Figure(c)
+Pencil::Pencil(Vertex start, Color c) : Figure(c)
 {
+	// set starting point
 	points.push_back(start);
-
 }
 
 Pencil::~Pencil()
 {
+	// remove all vertexes
 	points.clear();
 }
 
-void Pencil::render()
+void Pencil::render() const
 {
+	// set color
 	color.bind();
+	// set line width to 1
 	glLineWidth(1);
+	// start drawing set of connected lines
 	glBegin(GL_LINE_STRIP);
-	for (list<Vertex>::iterator i = points.begin(); i != points.end(); ++i)
+	// draw all lines
+	for (list<Vertex>::const_iterator i = points.begin(); i != points.end(); ++i)
 	{
 		i->glVertex();
 	}
+	// finish drawing
 	glEnd();
 }
 
@@ -28,13 +34,14 @@ void Pencil::mouseMoved(const Vertex& v)
 	// if we already have a line
 	if (points.size() > 1)
 	{	
-		// get prelast and last points
+		// get penultimate and last points
 		Vertex prelast = *(-- --points.end());
+		// last vertex
 		Vertex last = points.back();
 		// if new point is a prolongation of last line
 		if ((prelast - last).proportional(v - last))
 		{
-			// just replace a prevous point with a current mouse position
+			// just replace a previous point with a current mouse position
 			points.back() = v;
 		}
 		else
@@ -45,8 +52,9 @@ void Pencil::mouseMoved(const Vertex& v)
 	}
 	else
 	{
+		// add new point
 		points.push_back(v);
-		// glFlush();
 	}
+	// redraw screen
 	glutPostRedisplay();
 }

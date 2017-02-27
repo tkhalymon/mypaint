@@ -1,19 +1,22 @@
 #ifndef __FINAL_HPP__
 #define __FINAL_HPP__
 
-#include "toolbox.hpp"
+#include "scale.hpp"
 
-// just a toolbox, that shows current color
+/*
+	class Figure
 
-class Final : public Toolbox
+	just a piece, that shows current color
+*/
+
+class Final : public Scale
 {
 public:
 	Final(shared_ptr<int> width, int height, int offset, shared_ptr<Color> color);
 	~Final();
+	
 	bool click(Vertex mouse);
 	void render();
-	void update();
-	shared_ptr<Color>& colorPtr();
 };
 
 #endif // __FINAL_HPP__

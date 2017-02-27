@@ -3,22 +3,25 @@
 Picture::Picture(const int& width, const int& height, const char* title)
 		: Window (width, height, title)
 {
-	lineWidth = 5;
+	// default line width
+	lineWidth = 1;
+	// default color - black
 	activeColor = make_shared<Color>(0, 0, 0);
 }
 
 Picture::~Picture()
-{
-
-}
+{}
 
 void Picture::display()
 {
+	// clear screen
 	glClear(GL_COLOR_BUFFER_BIT);
+	// render all figures
 	for (std::vector<shared_ptr<Figure>>::iterator i = figures.begin(); i != figures.end(); ++i)
 	{
 		(*i)->render();
 	}
+	// move back buffer to screen
 	glutSwapBuffers();
 }
 
@@ -29,14 +32,10 @@ void Picture::mousePress(const int& button, const int& state, const Vertex& mous
 		switch (button)
 		{
 		case GLUT_LEFT_BUTTON:
-			figures.push_back(make_shared<Pencil>(mousePos, *activeColor, lineWidth));
-			break;
-		case GLUT_MIDDLE_BUTTON:
+			figures.push_back(make_shared<Pencil>(mousePos, *activeColor));
 			// figures.push_back(make_shared<Ellipse>(mousePos, *activeColor, lineWidth));
-			figures.push_back(make_shared<Rectangle>(mousePos, *activeColor, lineWidth));
-			break;
-		case GLUT_RIGHT_BUTTON:
-			figures.push_back(make_shared<Line>(mousePos, *activeColor, lineWidth));
+			// figures.push_back(make_shared<Rectangle>(mousePos, *activeColor, lineWidth));
+			// figures.push_back(make_shared<Line>(mousePos, *activeColor, lineWidth));
 			break;
 		default:
 			break;
@@ -44,19 +43,31 @@ void Picture::mousePress(const int& button, const int& state, const Vertex& mous
 		actions.push_back(make_shared<Action>(figures.back(), Action::Type::Create));
 		undoneActs.clear();
 	}
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
+	{
+		if (!figures.empty())
+		{
+			figures.back()->finish();
+		}
+	}
 	// glutPostRedisplay();
 }
 
 void Picture::mouseMove(const Vertex& mousePos)
 {
-
+	// show current mouse position
 }
 
 void Picture::mousePressMove(const Vertex& mousePos)
 {
-	figures.back()->mouseMoved(mousePos);
+	// figure may be deleted in process of creation, so check it figure exists
+	if (!figures.empty() && !figures.back()->finished())
+	{
+		// submit mouse move action
+		figures.back()->mouseMoved(mousePos);
+	}
+	// redraw screen
 	glutPostRedisplay();
-	// glutSwapBuffers();
 }
 
 void Picture::keyPress(unsigned char key, const Vertex& mousePos)
@@ -70,11 +81,6 @@ void Picture::keyPress(unsigned char key, const Vertex& mousePos)
 		redo();
 		break;
 	}
-}
-
-void Picture::keyPressSpecial(const int& key, const Vertex& mousePos)
-{
-	
 }
 
 void Picture::reshape (const int& newWidht, const int& newHeight)
@@ -97,30 +103,34 @@ void Picture::reshape (const int& newWidht, const int& newHeight)
 
 bool Picture::undo()
 {
+	// if no actions was performed
 	if (actions.empty())
 	{
 		return false;
 	}
 	else
 	{
+		// write undone action to vector
+		undoneActs.push_back(actions.back());
 		switch (actions.back()->type())
 		{
 		case Action::Type::Create:
-			undoneActs.push_back(actions.back());
+			// remove figure
 			figures.pop_back();
-			actions.pop_back();
 			break;
 		case Action::Type::Delete:
-			undoneActs.push_back(actions.back());
+			// add deleted figure to figures vector
 			figures.push_back(actions.back()->figure());
-			actions.pop_back();
 			break;
 		};
+		// remove action from done actions vector
+		actions.pop_back();
+		// redraw
 		glutPostRedisplay();
 		return true;
 
 	}
-		glutSetCursor(GLUT_CURSOR_CYCLE);
+	glutSetCursor(GLUT_CURSOR_CYCLE);
 }
 
 bool Picture::redo()

@@ -58,6 +58,28 @@ Window::~Window()
 	windows.erase(windows.find(id));
 }
 
+// implement an empty callbacks - for case it'll be unused
+
+// mouse button pressing
+void Window::mousePress(const int& button, const int& state, const Vertex& mousePos)
+{}
+// mouse moving
+void Window::mouseMove(const Vertex& mousePos)
+{}
+// mouse moving with buttons pressed (drag)
+void Window::mousePressMove(const Vertex& mousePos)
+{}
+// keyboard key press
+void Window::keyPress(unsigned char key, const Vertex& mousePos)
+{}
+// keyboard special key press (F1-F12, Arrows, etc.)
+void Window::keyPressSpecial(const int& key, const Vertex& mousePos)
+{}
+// calls when user changes window size
+void Window::reshape(const int& width, const int& height)
+{}
+
+
 void Window::setBgColor(const float& red, const float& green, const float& blue)
 {
 	// RGB scheme, 1 is alpha channel

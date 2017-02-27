@@ -3,37 +3,45 @@
 Palette::Palette(int width, int height, const char* title, shared_ptr<Color> color)
 				: Window(width, height, title), color(color)
 {
-	toolboxes.push_back(make_shared<Shade>(this->width, 50, 0));
-	int offset = toolboxes.back()->getOffset() + toolboxes.back()->getHeight();
-	toolboxes.push_back(make_shared<Brightness>(this->width, 30, offset, toolboxes.back()->colorPtr()));
-	offset = toolboxes.back()->getOffset() + toolboxes.back()->getHeight();
-	toolboxes.push_back(make_shared<Lightness>(this->width, 30, offset, toolboxes.back()->colorPtr(), color));
-	offset = toolboxes.back()->getOffset() + toolboxes.back()->getHeight();
-	toolboxes.push_back(make_shared<Final>(this->width, 30, offset, color));
+	// create all scales
+	// Shade scale
+	scales.push_back(make_shared<Shade>(this->width, 50, 0));
+	int offset = scales.back()->getOffset() + scales.back()->getHeight();
+	// Brightness scale
+	scales.push_back(make_shared<Brightness>(this->width, 30, offset, scales.back()->colorPtr()));
+	offset = scales.back()->getOffset() + scales.back()->getHeight();
+	// Lightness scale
+	scales.push_back(make_shared<Lightness>(this->width, 30, offset, scales.back()->colorPtr(), color));
+	offset = scales.back()->getOffset() + scales.back()->getHeight();
+	// and a resulting color
+	scales.push_back(make_shared<Final>(this->width, 30, offset, color));
 }
 
 Palette::~Palette()
-{
-
-}
+{}
 
 void Palette::display()
 {
+	// clear screen
 	glClear(GL_COLOR_BUFFER_BIT);
-	for (vector<shared_ptr<Toolbox>>::iterator i = toolboxes.begin(); i != toolboxes.end(); ++i)
+	// render all scales
+	for (vector<shared_ptr<Scale>>::iterator i = scales.begin(); i != scales.end(); ++i)
 	{
 		(*i)->render();
 	}
-	color->bind();
+	// swap back and front buffer (drawing buffer and on-screen buffer)
 	glutSwapBuffers();
 }
 
 void Palette::mousePress(const int& button, const int& state, const Vertex& mousePos)
 {
-	if (state == GLUT_DOWN)
+	// if button is pressed down
+	if (state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
 	{
-		for (vector<shared_ptr<Toolbox>>::iterator i = toolboxes.begin(); i != toolboxes.end(); ++i)
+		// for each scale
+		for (auto i = scales.begin(); i != scales.end(); ++i)
 		{
+			// if scale is clicked
 			if ((*i)->click(mousePos))
 			{
 				glutPostRedisplay();
@@ -41,46 +49,34 @@ void Palette::mousePress(const int& button, const int& state, const Vertex& mous
 				break;
 			}
 		}
-		for (vector<shared_ptr<Toolbox>>::iterator i = toolboxes.begin(); i != toolboxes.end(); ++i)
+		// update all scales, except last (it's updated automatically)
+		for (auto i = scales.begin(); i != --scales.end(); ++i)
 		{
 			(*i)->update();
-		}	
+		}
 	}
 	glutPostRedisplay();
-}
-
-void Palette::mouseMove(const Vertex& mousePos)
-{
-
 }
 
 void Palette::mousePressMove(const Vertex& mousePos)
 {
-	for (vector<shared_ptr<Toolbox>>::iterator i = toolboxes.begin(); i != toolboxes.end(); ++i)
+	for (vector<shared_ptr<Scale>>::iterator i = scales.begin(); i != scales.end(); ++i)
 	{
 		if ((*i)->click(mousePos))
 		{
+			// redraw screen
 			glutPostRedisplay();
 			// don't check next
-			// i++;
 			break;
 		}
 	}
-	for (vector<shared_ptr<Toolbox>>::iterator i = toolboxes.begin(); i != toolboxes.end(); ++i)
+	// update all scales, except last (it's updated automatically)
+	for (auto i = scales.begin(); i != --scales.end(); ++i)
 	{
 		(*i)->update();
 	}
+	// redraw screen
 	glutPostRedisplay();
-}
-
-void Palette::keyPress(unsigned char key, const Vertex& mousePos)
-{
-
-}
-
-void Palette::keyPressSpecial(const int& key, const Vertex& mousePos)
-{
-
 }
 
 void Palette::reshape(const int& width, const int& height)

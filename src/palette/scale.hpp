@@ -6,31 +6,31 @@
 using std::shared_ptr;
 using std::make_shared;
 
-#include "../picture/graphics/vertex.hpp"
-#include "../picture/graphics/color.hpp"
+#include "../graphics/vertex.hpp"
+#include "../graphics/color.hpp"
 
-class Toolbox
+class Scale
 {
 public:
 	// shared pointer to width, because it's related to window size
-	Toolbox(shared_ptr<int> width, int height, int offset);
-	virtual ~Toolbox();
-	// toolbox height with paddings
+	Scale(shared_ptr<int> width, int height, int offset);
+	virtual ~Scale();
+	// scale height with paddings
 	int getHeight() const;
 	// get vertical offset from top
 	int getOffset() const;
 	// mouse click handler
-	virtual bool click(Vertex mouse) = 0;
-	// renders a toolbox in current window, returns true, if this toolbox has been clicked
+	virtual bool click(Vertex mouse);
+	// renders a scale in current window, returns true, if this scale has been clicked
 	virtual void render() = 0;
 	// just a white frame
 	void renderFrame();
 	// arrow, that points to current value
 	void renderArrow();
 	// update color when dependent color changed
-	virtual void update() = 0;
+	void update();
 	// get shared pointer to resulting color
-	virtual shared_ptr<Color>& colorPtr() = 0;
+	shared_ptr<Color>& colorPtr();
 
 protected:
 	// distance from window borders and other toolboxes
@@ -39,7 +39,7 @@ protected:
 	shared_ptr<int> width;
 	// resulting color value
 	shared_ptr<Color> color;
-	// toolbox height
+	// scale height
 	int height;
 	// distance from top of the window
 	int offset;

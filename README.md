@@ -26,3 +26,36 @@ Build by cmake:
 Run:
 
 	./mypaint
+
+## Usage
+
+You have 3 windows:
+
+* Picture
+* Palette
+* Toolbox
+
+**Note: If you'll close one of the windows by "X", all windows will be closed.**
+
+### Picture
+
+This is a window for drawing. Here you place figures.
+
+### Palette
+
+In this window you can select drawing color. First scale is a shade.
+Second scale is brightness - from black to selected shade color.
+Third is lightness - from color selected on second scale to white.
+
+### Toolbox
+
+Here you can select drawing instrument (pencil, line, ellipse, rectangle),
+line width, transparency level, etc.
+
+### Hot keys
+
+|	Key		|	Action					|
+|-----------|---------------------------|
+| `Ctrl-z`	| Remove last added figure	|
+| `Ctrl-y`	| Revert last deletion		|
+| `Alt-q`	| Exit						|

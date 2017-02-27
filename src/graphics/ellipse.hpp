@@ -24,7 +24,7 @@ public:
 	Ellipse(Vertex center, Color c, int lineWidth);
 	~Ellipse();
 	// draw
-	void render();
+	void render() const;
 	// handle new mouse vertex
 	void mouseMoved(const Vertex& v);
 

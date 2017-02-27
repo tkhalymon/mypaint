@@ -8,10 +8,10 @@
 #include "../window/window.hpp"
 
 // all figures
-#include "graphics/line.hpp"
-#include "graphics/pencil.hpp"
-#include "graphics/ellipse.hpp"
-#include "graphics/rectangle.hpp"
+#include "../graphics/line.hpp"
+#include "../graphics/pencil.hpp"
+#include "../graphics/ellipse.hpp"
+#include "../graphics/rectangle.hpp"
 
 // for action history
 #include "actions/action.hpp"
@@ -40,7 +40,7 @@ public:
 	// keyboard key press
 	void keyPress(unsigned char key, const Vertex& mousePos);
 	// keyboard special key press (F1-F12, Arrows, etc.)
-	void keyPressSpecial(const int& key, const Vertex& mousePos);
+	// void keyPressSpecial(const int& key, const Vertex& mousePos);
 	// calls when user changes window size
 	void reshape (const int& newWidth, const int& newHeight);
 	// undo last action
