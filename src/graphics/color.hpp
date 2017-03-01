@@ -1,5 +1,5 @@
-#ifndef __COLOR_HPP__
-#define __COLOR_HPP__
+#ifndef __GRAPHICS_COLOR_HPP__
+#define __GRAPHICS_COLOR_HPP__
 
 #include <GL/glut.h>
 
@@ -42,4 +42,4 @@ private:
 	static const int alpha_index;
 };
 
-#endif
+#endif // __GRAPHICS_COLOR_HPP__

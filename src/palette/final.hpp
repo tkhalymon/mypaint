@@ -1,5 +1,5 @@
-#ifndef __FINAL_HPP__
-#define __FINAL_HPP__
+#ifndef __PALETTE_FINAL_HPP__
+#define __PALETTE_FINAL_HPP__
 
 #include "scale.hpp"
 
@@ -19,4 +19,4 @@ public:
 	void render();
 };
 
-#endif // __FINAL_HPP__
+#endif // __PALETTE_FINAL_HPP__

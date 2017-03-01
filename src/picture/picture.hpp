@@ -1,5 +1,5 @@
-#ifndef __PICTURE_HPP__
-#define __PICTURE_HPP__
+#ifndef __PICTURE_PICTURE_HPP__
+#define __PICTURE_PICTURE_HPP__
 
 #include <vector>
 #include <memory>
@@ -66,4 +66,4 @@ private:
 	shared_ptr<int> lineWidth;
 };
 
-#endif // __PICTURE_HPP__
+#endif // __PICTURE_PICTURE_HPP__

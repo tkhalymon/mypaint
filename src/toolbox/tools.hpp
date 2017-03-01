@@ -1,5 +1,5 @@
-#ifndef __TOOLS_HPP__
-#define __TOOLS_HPP__
+#ifndef __TOOLBOX_TOOLS_HPP__
+#define __TOOLBOX_TOOLS_HPP__
 
 #include <memory>
 #include <vector>
@@ -28,9 +28,8 @@ public:
 	// calls when user changes window size
 	void reshape(const int& width, const int& height);
 
-
 private:
 	vector<shared_ptr<Toolbox>> toolboxes;
 };
 
-#endif // __TOOLS_HPP__
+#endif // __TOOLBOX_TOOLS_HPP__

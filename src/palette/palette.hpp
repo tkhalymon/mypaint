@@ -1,5 +1,5 @@
-#ifndef __PALETTE_HPP__
-#define __PALETTE_HPP__
+#ifndef __PALETTE_PALETTE_HPP__
+#define __PALETTE_PALETTE_HPP__
 
 #include <GL/glut.h>
 #include <memory>
@@ -38,4 +38,4 @@ private:
 	shared_ptr<Color> color;
 };
 
-#endif // __PALETTE_HPP__
+#endif // __PALETTE_PALETTE_HPP__

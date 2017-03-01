@@ -1,5 +1,5 @@
-#ifndef __LINE_HPP__
-#define __LINE_HPP__
+#ifndef __GRAPHICS_LINE_HPP__
+#define __GRAPHICS_LINE_HPP__
 
 #include <GL/glut.h>
 
@@ -32,4 +32,4 @@ private:
 	int width;
 };
 
-#endif // __LINE_HPP__
+#endif // __GRAPHICS_LINE_HPP__

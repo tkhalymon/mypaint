@@ -1,5 +1,5 @@
-#ifndef __RECTANGLE_HPP__
-#define __RECTANGLE_HPP__
+#ifndef __GRAPHICS_RECTANGLE_HPP__
+#define __GRAPHICS_RECTANGLE_HPP__
 
 class Rectangle;
 
@@ -34,4 +34,4 @@ private:
 	bool filled;
 };
 
-#endif
+#endif // __GRAPHICS_RECTANGLE_HPP__

@@ -1,5 +1,5 @@
-#ifndef __BRIGHTNESS_HPP__
-#define __BRIGHTNESS_HPP__
+#ifndef __PALETTE_BRIGHTNESS_HPP__
+#define __PALETTE_BRIGHTNESS_HPP__
 
 #include "scale.hpp"
 
@@ -26,4 +26,4 @@ private:
 	shared_ptr<Color> lightColor;
 };
 
-#endif // __BRIGHTNESS_HPP__
+#endif // __PALETTE_BRIGHTNESS_HPP__

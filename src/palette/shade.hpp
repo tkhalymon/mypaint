@@ -1,5 +1,5 @@
-#ifndef __SHADE_HPP__
-#define __SHADE_HPP__
+#ifndef __PALETTE_SHADE_HPP__
+#define __PALETTE_SHADE_HPP__
 
 #include <memory>
 
@@ -30,4 +30,4 @@ private:
 	static const double colors[4][3];
 };
 
-#endif // __SHADE_HPP__
+#endif // __PALETTE_SHADE_HPP__

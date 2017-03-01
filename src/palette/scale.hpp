@@ -1,5 +1,5 @@
-#ifndef __TOOLBOX_HPP__
-#define __TOOLBOX_HPP__
+#ifndef __PALETTE_TOOLBOX_HPP__
+#define __PALETTE_TOOLBOX_HPP__
 
 #include <memory>
 
@@ -47,4 +47,4 @@ protected:
 	int value;
 };
 
-#endif /// __TOOLBOX_HPP__
+#endif /// __PALETTE_TOOLBOX_HPP__

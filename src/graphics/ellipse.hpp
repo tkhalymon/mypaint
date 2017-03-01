@@ -1,5 +1,5 @@
-#ifndef __ELLIPSE_HPP__
-#define __ELLIPSE_HPP__
+#ifndef __GRAPHICS_ELLIPSE_HPP__
+#define __GRAPHICS_ELLIPSE_HPP__
 
 class Ellipse;
 
@@ -38,4 +38,4 @@ private:
 	int lineWidth;
 };
 
-#endif // __ELLIPSE_HPP__
+#endif // __GRAPHICS_ELLIPSE_HPP__

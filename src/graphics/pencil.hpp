@@ -1,5 +1,5 @@
-#ifndef __PENCIL_HPP__
-#define __PENCIL_HPP__
+#ifndef __GRAPHICS_PENCIL_HPP__
+#define __GRAPHICS_PENCIL_HPP__
 
 #include <GL/glut.h>
 #include <list>
@@ -32,4 +32,4 @@ private:
 	list<Vertex> points;
 };
 
-#endif // __PENCIL_HPP__
+#endif // __GRAPHICS_PENCIL_HPP__

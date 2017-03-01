@@ -1,5 +1,5 @@
-#ifndef __TOOLBOX_HPP__A
-#define __TOOLBOX_HPP__A
+#ifndef __TOOLBOX_TOOLBOX_HPP__
+#define __TOOLBOX_TOOLBOX_HPP__
 
 #include <memory>
 #include <vector>
@@ -37,4 +37,4 @@ protected:
 	static int padding;
 };
 
-#endif // __TOOLBOX_HPP__
+#endif // __TOOLBOX_TOOLBOX_HPP__

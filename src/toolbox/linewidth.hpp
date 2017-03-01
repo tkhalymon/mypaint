@@ -1,5 +1,5 @@
-#ifndef __LINEWIDTH_HPP__
-#define __LINEWIDTH_HPP__
+#ifndef __TOOLBOX_LINEWIDTH_HPP__
+#define __TOOLBOX_LINEWIDTH_HPP__
 
 #include <memory>
 
@@ -22,4 +22,4 @@ private:
 	shared_ptr<int> value;
 };
 
-#endif
+#endif // __TOOLBOX_LINEWIDTH_HPP__

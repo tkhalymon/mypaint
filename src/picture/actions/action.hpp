@@ -1,5 +1,5 @@
-#ifndef __ACTION_HPP__
-#define __ACTION_HPP__
+#ifndef __PICTURE_ACTION_ACTION_HPP__
+#define __PICTURE_ACTION_ACTION_HPP__
 
 #include <memory>
 
@@ -28,4 +28,4 @@ private:
 	Type actType;
 };
 
-#endif // __ACTION_HPP__
+#endif // __PICTURE_ACTION_ACTION_HPP__

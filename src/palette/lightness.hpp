@@ -1,5 +1,5 @@
-#ifndef __LIGHTNESS_HPP__
-#define __LIGHTNESS_HPP__
+#ifndef __PALETTE_LIGHTNESS_HPP__
+#define __PALETTE_LIGHTNESS_HPP__
 
 #include "scale.hpp"
 
@@ -19,4 +19,4 @@ private:
 	shared_ptr<Color> startColor;
 };
 
-#endif // __LIGHTNESS_HPP__
+#endif // __PALETTE_LIGHTNESS_HPP__

@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	// dark gray
 	picture.setBgColor(0.1, 0.1, 0.1);
 
-	Tools tools(100, 400, "Tools", picture.lineWidthPtr());
+	// Tools tools(100, 400, "Tools", picture.lineWidthPtr());
 	// enter GLUT main loop - start callbacks and rendering
 	glutMainLoop();
 	return 0;

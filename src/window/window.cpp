@@ -24,6 +24,8 @@ Window::Window(const int& width, const int& height, const char* title)
 {
 	this->width = make_shared<int>(width);
 	this->height = make_shared<int>(height);
+	this->minWidth = width;
+	this->minHeight = height;
 	// set window size
 	glutInitWindowSize(width, height);
 	// create window and get it's ID

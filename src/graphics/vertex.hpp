@@ -1,5 +1,5 @@
-#ifndef __VERTEX_HPP__
-#define __VERTEX_HPP__
+#ifndef __GRAPHICS_VERTEX_HPP__
+#define __GRAPHICS_VERTEX_HPP__
 
 #include <GL/glut.h>
 
@@ -34,4 +34,4 @@ private:
 	static const int y_index;
 };
 
-#endif // __VERTEX_HPP__
+#endif // __GRAPHICS_VERTEX_HPP__

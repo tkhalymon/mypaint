@@ -1,5 +1,5 @@
-#ifndef __WINDOW_HPP__
-#define __WINDOW_HPP__
+#ifndef __WINDOW_WINDOW_HPP__
+#define __WINDOW_WINDOW_HPP__
 
 // GLUT (OpenGL header)
 #include <GL/glut.h>
@@ -94,8 +94,8 @@ protected: // available for inherited classes
 	shared_ptr<int> height;
 
 	// minimal window size
-	int minWidth; 
+	int minWidth;
 	int minHeight;
 };
 
-#endif // __WINDOW_HPP__
+#endif // __WINDOW_WINDOW_HPP__

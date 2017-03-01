@@ -1,5 +1,5 @@
-#ifndef __FIGURE_HPP__
-#define __FIGURE_HPP__
+#ifndef __GRAPHICS_FIGURE_HPP__
+#define __GRAPHICS_FIGURE_HPP__
 
 #include <GL/glut.h>
 
@@ -40,4 +40,4 @@ protected:
 	bool isFinished;
 };
 
-#endif // __FIGURE_HPP__
+#endif // __GRAPHICS_FIGURE_HPP__
