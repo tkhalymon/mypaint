@@ -14,7 +14,9 @@ Palette::Palette(int width, int height, const char* title, shared_ptr<Color> col
 	scales.push_back(make_shared<Lightness>(this->width, 30, offset, scales.back()->colorPtr(), color));
 	offset = scales.back()->getOffset() + scales.back()->getHeight();
 	// and a resulting color
-	scales.push_back(make_shared<Final>(this->width, 30, offset, color));
+	scales.push_back(make_shared<Final>(this->width, 50, offset, color));
+	minHeight = 235;
+	minWidth = 200;
 }
 
 Palette::~Palette()

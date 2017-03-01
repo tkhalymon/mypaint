@@ -40,7 +40,6 @@ bool Shade::click (Vertex mouse)
 		return false;
 	}
 }
-
 void Shade::render()
 {
 	// draw 3 parts of shade scale by triangles

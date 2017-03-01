@@ -1,12 +1,16 @@
-#ifndef __TOOLBOX_HPP__
-#define __TOOLBOX_HPP__
+#ifndef __TOOLBOX_HPP__A
+#define __TOOLBOX_HPP__A
 
 #include <memory>
+#include <vector>
 
 using std::shared_ptr;
+using std::vector;
 using std::make_shared;
 
 class Toolbox;
+
+#include "../graphics/vertex.hpp"
 
 /*
 	class Toolbox
@@ -18,14 +22,19 @@ class Toolbox;
 class Toolbox
 {
 public:
-	Toolbox();
+	Toolbox(shared_ptr<int> width);
 	~Toolbox();
+
+	virtual bool mouseClick(const Vertex& pos) = 0;
+	virtual void render() const = 0;
+	int getHeight();
 
 private:
 
 protected:
-
+	shared_ptr<int> height;
 	shared_ptr<int> width;
+	static int padding;
 };
 
-#endif
+#endif // __TOOLBOX_HPP__

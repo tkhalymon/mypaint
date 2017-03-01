@@ -10,13 +10,15 @@ using std::shared_ptr;
 class Action
 {
 public:
+	// action type
 	enum Type { Create, Delete };
 
 	Action(shared_ptr<Figure> pFigure, Type t);
 	~Action();
 
-	Type type();
-
+	// get action type
+	const Type& type() const;
+	// get affected figure
 	shared_ptr<Figure> figure();
 
 private:

@@ -147,10 +147,27 @@ void Window::glutKeyPressSpecial(int key, int x, int y)
 
 void Window::glutReshape(int width, int height)
 {
-	// width = std::min(width, minWidth);
-	// height = std::min(height, minHeight);
-	windows[glutGetWindow()]->checkMinSize(width, height);
-	windows[glutGetWindow()]->reshape(width, height);
+	*windows[glutGetWindow()]->width = glutGet(GLUT_WINDOW_WIDTH);
+	*windows[glutGetWindow()]->height = glutGet(GLUT_WINDOW_HEIGHT);
+	bool lessThenMin = false;
+	if (windows[glutGetWindow()]->minWidth > width)
+	{
+		width = windows[glutGetWindow()]->minWidth;
+		lessThenMin = true;
+	}
+	if (windows[glutGetWindow()]->minHeight > height)
+	{
+		height = windows[glutGetWindow()]->minHeight;
+		lessThenMin = true;
+	}
+	if (lessThenMin)
+	{
+		glutReshapeWindow(width, height);
+	}
+	glViewport(0, 0, width, height);
+	glLoadIdentity();
+	glOrtho(1, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 1, 0, 1);
+	glMatrixMode(GL_MODELVIEW);
 }
 
 bool Window::checkMinSize(const int &width, const int &height)

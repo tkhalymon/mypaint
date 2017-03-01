@@ -4,7 +4,7 @@ Picture::Picture(const int& width, const int& height, const char* title)
 		: Window (width, height, title)
 {
 	// default line width
-	lineWidth = 1;
+	lineWidth = make_shared<int>(1);
 	// default color - black
 	activeColor = make_shared<Color>(0, 0, 0);
 }
@@ -43,19 +43,21 @@ void Picture::mousePress(const int& button, const int& state, const Vertex& mous
 		actions.push_back(make_shared<Action>(figures.back(), Action::Type::Create));
 		undoneActs.clear();
 	}
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
+	else
 	{
-		if (!figures.empty())
+		if (button == GLUT_LEFT_BUTTON)
 		{
-			figures.back()->finish();
+			if (!figures.empty())
+			{
+				figures.back()->finish();
+			}
 		}
 	}
-	// glutPostRedisplay();
 }
 
 void Picture::mouseMove(const Vertex& mousePos)
 {
-	// show current mouse position
+	// current mouse position can be shown here
 }
 
 void Picture::mousePressMove(const Vertex& mousePos)
@@ -152,4 +154,9 @@ bool Picture::redo()
 shared_ptr<Color> Picture::colorPtr()
 {
 	return activeColor;
+}
+
+shared_ptr<int> Picture::lineWidthPtr()
+{
+	return lineWidth;
 }

@@ -50,6 +50,8 @@ public:
 	// shared pointer to color for palette
 	shared_ptr<Color> colorPtr();
 
+	shared_ptr<int> lineWidthPtr();
+
 private:
 
 	// all rendered figures
@@ -61,7 +63,7 @@ private:
 	// current drawing color
 	shared_ptr<Color> activeColor;
 	// current line width
-	int lineWidth;
+	shared_ptr<int> lineWidth;
 };
 
 #endif // __PICTURE_HPP__

@@ -6,7 +6,7 @@ Action::Action(shared_ptr<Figure> figure, Type t) : affectedFigure(figure), actT
 Action::~Action()
 {}
 
-Action::Type Action::type()
+const Action::Type& Action::type() const
 {
 	return actType;
 }
