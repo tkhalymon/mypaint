@@ -27,8 +27,6 @@ public:
 	Picture(const int& width, const int& height, const char* title);
 	~Picture();
 
-	// void saveState();
-
 	// rendering function
 	void display();
 	// mouse button pressing
@@ -52,6 +50,8 @@ public:
 
 	shared_ptr<int> lineWidthPtr();
 
+	shared_ptr<int> instrumentPtr();
+
 private:
 
 	// all rendered figures
@@ -64,6 +64,7 @@ private:
 	shared_ptr<Color> activeColor;
 	// current line width
 	shared_ptr<int> lineWidth;
+	shared_ptr<int> instrument;
 };
 
 #endif // __PICTURE_PICTURE_HPP__

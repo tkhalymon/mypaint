@@ -11,6 +11,7 @@ using std::make_shared;
 class Toolbox;
 
 #include "../graphics/vertex.hpp"
+#include "../picture/picture.hpp"
 
 /*
 	class Toolbox
@@ -22,7 +23,7 @@ class Toolbox;
 class Toolbox
 {
 public:
-	Toolbox(shared_ptr<int> width);
+	Toolbox(shared_ptr<int> width, shared_ptr<int> padding);
 	~Toolbox();
 
 	virtual bool mouseClick(const Vertex& pos) = 0;
@@ -32,9 +33,10 @@ public:
 private:
 
 protected:
-	shared_ptr<int> height;
+
+	int height;
 	shared_ptr<int> width;
-	static int padding;
+	shared_ptr<int> padding;
 };
 
 #endif // __TOOLBOX_TOOLBOX_HPP__

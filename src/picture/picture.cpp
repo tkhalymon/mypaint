@@ -3,10 +3,23 @@
 Picture::Picture(const int& width, const int& height, const char* title)
 		: Window (width, height, title)
 {
+	// set white background color
+	setBgColor(1, 1, 1);
+	if (activeColor.use_count() == 0)
+	{
+		// default color - black
+		activeColor = make_shared<Color>(0, 0, 0);
+	}
 	// default line width
-	lineWidth = make_shared<int>(1);
-	// default color - black
-	activeColor = make_shared<Color>(0, 0, 0);
+	if (lineWidth.use_count() == 0)
+	{
+		lineWidth = make_shared<int>(1);
+	}
+	// default instrument
+	if (instrument.use_count() == 0)
+	{
+		instrument = make_shared<int>(1);
+	}
 }
 
 Picture::~Picture()
@@ -29,16 +42,23 @@ void Picture::mousePress(const int& button, const int& state, const Vertex& mous
 {
 	if (state == GLUT_DOWN)
 	{
-		switch (button)
+		if (button == GLUT_LEFT_BUTTON)
 		{
-		case GLUT_LEFT_BUTTON:
-			figures.push_back(make_shared<Pencil>(mousePos, *activeColor));
-			// figures.push_back(make_shared<Ellipse>(mousePos, *activeColor, lineWidth));
-			// figures.push_back(make_shared<Rectangle>(mousePos, *activeColor, lineWidth));
-			// figures.push_back(make_shared<Line>(mousePos, *activeColor, lineWidth));
-			break;
-		default:
-			break;
+			switch (*instrument)
+			{
+			case 1:
+				figures.push_back(make_shared<Pencil>(mousePos, *activeColor));
+				break;
+			case 2:
+				figures.push_back(make_shared<Line>(mousePos, *activeColor, *lineWidth));
+				break;
+			case 3:
+				figures.push_back(make_shared<Ellipse>(mousePos, *activeColor, *lineWidth));
+				break;
+			case 4:
+				figures.push_back(make_shared<Rectangle>(mousePos, *activeColor, *lineWidth));
+				break;
+			}
 		}
 		actions.push_back(make_shared<Action>(figures.back(), Action::Type::Create));
 		undoneActs.clear();
@@ -74,33 +94,24 @@ void Picture::mousePressMove(const Vertex& mousePos)
 
 void Picture::keyPress(unsigned char key, const Vertex& mousePos)
 {
+	int modifiers = glutGetModifiers();
+	bool ctrl = modifiers & GLUT_ACTIVE_CTRL;
+	// bool alt = modifiers & GLUT_ACTIVE_ALT;
+	// bool shift = modifiers & GLUT_ACTIVE_SHIFT;
 	switch(key)
 	{
-	case 8: // Backspace
-		undo();
+	case 26: // ctrl-z
+		if (ctrl) undo();
 		break;
-	case 13:
-		redo();
+	case 25: // ctrl-y
+		if (ctrl) redo();
 		break;
 	}
 }
 
 void Picture::reshape (const int& newWidht, const int& newHeight)
 {
-	// check if new size not less then minimal
-	// Size2d size(width, height);
-	// if (newSize.width() < minSize.width())
-	// {
-	// 	newSize.setWidth(minSize.width());
-	// }
-	// if (newSize.height() < minSize.height())
-	// {
-	// 	newSize.setHeight(minSize.height());
-	// }
-	// if (newSize == Size2d(newSize.width(), newSize.height()))
-	// {
-	// 	glutReshapeWindow(newSize.width(), newSize.height());
-	// }
+
 }
 
 bool Picture::undo()
@@ -132,7 +143,6 @@ bool Picture::undo()
 		return true;
 
 	}
-	glutSetCursor(GLUT_CURSOR_CYCLE);
 }
 
 bool Picture::redo()
@@ -159,4 +169,9 @@ shared_ptr<Color> Picture::colorPtr()
 shared_ptr<int> Picture::lineWidthPtr()
 {
 	return lineWidth;
+}
+
+shared_ptr<int> Picture::instrumentPtr()
+{
+	return instrument;
 }

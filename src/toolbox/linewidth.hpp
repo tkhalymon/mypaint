@@ -13,7 +13,7 @@ class Linewidth;
 class Linewidth : public Toolbox
 {
 public:
-	Linewidth(shared_ptr<int> width, shared_ptr<int> lineWidth);
+	Linewidth(shared_ptr<int> width, shared_ptr<int> padding, shared_ptr<int> lineWidth);
 	~Linewidth();
 	void render() const;
 	bool mouseClick(const Vertex& pos);

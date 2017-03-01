@@ -86,6 +86,7 @@ void Window::setBgColor(const float& red, const float& green, const float& blue)
 {
 	// RGB scheme, 1 is alpha channel
 	glClearColor(red, green, blue, 1);
+	glutPostRedisplay();
 }
 
 void Window::setMinSize(const int& width, const int& height)
@@ -149,8 +150,6 @@ void Window::glutKeyPressSpecial(int key, int x, int y)
 
 void Window::glutReshape(int width, int height)
 {
-	*windows[glutGetWindow()]->width = glutGet(GLUT_WINDOW_WIDTH);
-	*windows[glutGetWindow()]->height = glutGet(GLUT_WINDOW_HEIGHT);
 	bool lessThenMin = false;
 	if (windows[glutGetWindow()]->minWidth > width)
 	{
@@ -170,6 +169,9 @@ void Window::glutReshape(int width, int height)
 	glLoadIdentity();
 	glOrtho(1, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 1, 0, 1);
 	glMatrixMode(GL_MODELVIEW);
+	*windows[glutGetWindow()]->width = glutGet(GLUT_WINDOW_WIDTH);
+	*windows[glutGetWindow()]->height = glutGet(GLUT_WINDOW_HEIGHT);
+	windows[glutGetWindow()]->reshape(*windows[glutGetWindow()]->width, *windows[glutGetWindow()]->height);
 }
 
 bool Window::checkMinSize(const int &width, const int &height)

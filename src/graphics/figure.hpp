@@ -2,6 +2,12 @@
 #define __GRAPHICS_FIGURE_HPP__
 
 #include <GL/glut.h>
+#include <memory>
+#include <map>
+
+using std::shared_ptr;
+using std::make_shared;
+using std::map;
 
 /*
 	class Figure
@@ -29,6 +35,12 @@ public:
 	void finish();
 	// is completely created
 	bool finished();
+
+	// Factory pattern
+	// static shared_ptr<Figure> makeFigure(int type);
+	// stores all figure types
+
+	// static std::map<string, int> types;
 
 protected:
 
