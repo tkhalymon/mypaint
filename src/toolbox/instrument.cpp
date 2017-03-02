@@ -1,6 +1,6 @@
 #include "instrument.hpp"
 
-Instrument::Instrument(shared_ptr<int> width, shared_ptr<int> padding, shared_ptr<int> instrument) : Toolbox (width, padding), value(instrument)
+Instrument::Instrument(shared_ptr<int> width, shared_ptr<int> instrument) : Toolbox (width), value(instrument)
 {
 	*value = 1;
 	height = 20 * 4;
@@ -34,34 +34,38 @@ void Instrument::render() const
 	glEnd();
 	// save matrix transformations
 	glPushMatrix();
+	// make a little paddings for instrument icons
+	double instrumentPadding = 3;
+	glScaled((*width - instrumentPadding * 2) / *width, 1, 1);
+	glTranslated(instrumentPadding, 0, 0);
 	glLineWidth(2);
 	glColor3d(0, 0, 0);
-	// pencil - just a sinusoide
+	// pencil - just a sinusoidal
 	glBegin(GL_LINE_STRIP);
-	for (double i = 0; i < (*width - *padding * 2) / 5; i += 0.2)
-		glVertex2i(*padding + i * 5, iconHeight / 2 + sin(i) * 7);
+	for (double i = 0; i < (*width) / 5; i += 0.2)
+		glVertex2i(i * 5, iconHeight / 2 + sin(i) * (iconHeight / 2 - instrumentPadding));
 	glEnd();
 	// line
 	glTranslated(0, iconHeight, 0);
 	glBegin(GL_LINES);
-	glVertex2i(*padding, 5);
-	glVertex2i(*width - *padding, 15);
+	glVertex2i(0, instrumentPadding);
+	glVertex2i(*width, iconHeight - instrumentPadding);
 	glEnd();
 	// elipse
 	glTranslated(0, iconHeight, 0);
 	glBegin(GL_LINE_LOOP);
 	for (double angle = 0; angle < 2 * M_PI; angle += 0.01)
 	{
-		glVertex2i(*width / 2 + cos(angle) * (*width / 2 - *padding), 10 + sin(angle) * 7);
+		glVertex2i(*width / 2 + cos(angle) * (*width / 2), iconHeight / 2 + sin(angle) * (iconHeight / 2 - instrumentPadding));
 	}
 	glEnd();
 	// rectangle
 	glTranslated(0, iconHeight, 0);
 	glBegin(GL_LINE_LOOP);
-	glVertex2i(*padding, 3);
-	glVertex2i(*padding, 17);
-	glVertex2i(*width - *padding, 17);
-	glVertex2i(*width - *padding, 3);
+	glVertex2i(0, instrumentPadding);
+	glVertex2i(0, iconHeight - instrumentPadding);
+	glVertex2i(*width, iconHeight - instrumentPadding);
+	glVertex2i(*width, instrumentPadding);
 	glEnd();
 	// revert matrix transformations
 	glPopMatrix();

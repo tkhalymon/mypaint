@@ -9,7 +9,7 @@ const double Shade::colors[4][3] =
 	{1, 0, 0}
 };
 
-Shade::Shade(shared_ptr<int> width, int height, int offset) : Scale (width, height, offset)
+Shade::Shade(shared_ptr<int> width, int height) : Scale (width, height)
 {
 	// default shade is red
 	color = make_shared<Color>(1, 0, 0);
@@ -21,17 +21,13 @@ Shade::~Shade()
 bool Shade::click (Vertex mouse)
 {
 	// check if mouse is inside the toolbox
-	if (mouse.x() >= padding && mouse.x() < *width - padding
-	    && mouse.y() >= offset + padding && mouse.y() < offset + padding + height)
+	if (mouse.x() >= 0 && mouse.x() <= *width
+	    && mouse.y() >= 0 && mouse.y() <= height)
 	{
 		// set value
-		value = mouse.x() - padding;
-		// get pointed pixel color
-		unsigned char pixels[3];
-		glReadPixels(mouse.x(), glutGet(GLUT_WINDOW_WIDTH) - mouse.y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-		// color is returned as byte 0..255, so divide by 255. (floating point)
-		*color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
-		// toolbox clicked
+		value = mouse.x() / (double)*width;
+		// value = mouse.x();
+		update();
 		return true;
 	}
 	else
@@ -49,8 +45,8 @@ void Shade::render()
 		// bind color
 		glColor3dv(colors[i]);
 		// draw 2 vertexes
-		glVertex2i(padding + (*width - padding * 2) * i / 3, offset + padding);
-		glVertex2i(padding + (*width - padding * 2) * i / 3, offset + padding + height);
+		glVertex2i((*width) * i / 3, 0);
+		glVertex2i((*width) * i / 3, height);
 	}
 	// finish drawing
 	glEnd();
@@ -62,9 +58,8 @@ void Shade::render()
 
 void Shade::update()
 {
-	// update scale when dependent scale changed
-	// unsigned char pixels[3];
-	// glReadPixels(padding + value, glutGet(GLUT_WINDOW_HEIGHT) - offset - padding - 2, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-	// *color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
-	// glutPostRedisplay();
+	int component = (int)(value * 3.);
+	double hardness = (value * 3. - component);
+	for (int i = 0; i < 3; ++i)
+		(*color)[i] = colors[component][i] * (1 - hardness) + colors[component + 1][i] * hardness;
 }

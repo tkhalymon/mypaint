@@ -12,7 +12,7 @@
 class Final : public Scale
 {
 public:
-	Final(shared_ptr<int> width, int height, int offset, shared_ptr<Color> color);
+	Final(shared_ptr<int> width, int height, shared_ptr<Color> color);
 	~Final();
 	
 	bool click(Vertex mouse);

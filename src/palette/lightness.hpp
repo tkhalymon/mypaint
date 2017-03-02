@@ -7,13 +7,14 @@ class Lightness : public Scale
 {
 public:
 	// startColor is a color wrom which the scale will start, and final is a resulting color
-	Lightness(shared_ptr<int> width, int height, int offset, shared_ptr<Color> start, shared_ptr<Color> final);
+	Lightness(shared_ptr<int> width, int height, shared_ptr<Color> start);
 	~Lightness();
 	// mouse handler
 	bool click(Vertex mouse);
 	// drawing method
 	void render();
 	// refresh scale according to previous scales
+	void update();
 
 private:
 	shared_ptr<Color> startColor;

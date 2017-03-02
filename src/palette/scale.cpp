@@ -1,9 +1,7 @@
 #include "scale.hpp"
 
-const int Scale::padding = 15;
-
-Scale::Scale(shared_ptr<int> width, int height, int offset)
-		: width(width), height(height), offset(offset), value(1)
+Scale::Scale(shared_ptr<int> width, int height)
+		: width(width), height(height), value(0)
 {
 
 }
@@ -16,13 +14,7 @@ Scale::~Scale()
 int Scale::getHeight() const
 {
 	// full height
-	return height + padding;
-}
-
-int Scale::getOffset() const
-{
-	// distance from top of the screen
-	return offset;
+	return height;
 }
 
 bool Scale::click(Vertex mouse)
@@ -38,10 +30,10 @@ void Scale::renderFrame()
 	glBegin(GL_LINE_LOOP);
 	// white
 	glColor3d(1, 1, 1);
-	glVertex2i(padding - 1, offset + padding);
-	glVertex2i(padding - 1, offset + padding + height);
-	glVertex2i(*width - padding + 1, offset + padding + height);
-	glVertex2i(*width - padding + 1, offset + padding);
+	glVertex2i(0, 0);
+	glVertex2i(0, height + 1);
+	glVertex2i(*width + 1, height + 1);
+	glVertex2i(*width + 1, 0);
 	glEnd();
 }
 
@@ -52,9 +44,9 @@ void Scale::renderArrow()
 	// white color
 	glColor3d(1, 1, 1);
 	glBegin(GL_TRIANGLES);
-	glVertex2i(padding + value - 3, offset + padding + height + 4);
-	glVertex2i(padding + value + 3, offset + padding + height + 4);
-	glVertex2i(padding + value, offset + padding + height - 4);
+	glVertex2i(value * *width - 3, height + 4);
+	glVertex2i(value * *width + 3, height + 4);
+	glVertex2i(value * *width, height - 4);
 	glEnd();
 }
 
@@ -66,9 +58,9 @@ shared_ptr<Color>& Scale::colorPtr()
 
 void Scale::update()
 {
-	glutPostRedisplay();
-	unsigned char pixels[3];
-	glReadPixels(padding + value, glutGet(GLUT_WINDOW_HEIGHT) - offset - padding - 1, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-	*color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
-	glutPostRedisplay();
+	// glutPostRedisplay();
+	// unsigned char pixels[3];
+	// glReadPixels(padding + value, glutGet(GLUT_WINDOW_HEIGHT) - offset - padding - 1, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+	// *color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
+	// glutPostRedisplay();
 }

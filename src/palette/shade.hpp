@@ -14,7 +14,7 @@ class Shade : public Scale
 {
 public:
 	// constructor, which takes parameters 
-	Shade(shared_ptr<int> width, int height, int offset);
+	Shade(shared_ptr<int> width, int height);
 	~Shade();
 	// mouse click event
 	bool click(Vertex mouse);

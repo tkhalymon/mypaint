@@ -1,10 +1,10 @@
 #include "lightness.hpp"
 
-Lightness::Lightness(shared_ptr<int> width, int height, int offset, shared_ptr<Color> start, shared_ptr<Color> final)
-		: Scale (width, height, offset)
+Lightness::Lightness(shared_ptr<int> width, int height, shared_ptr<Color> start)
+		: Scale (width, height), startColor(start)
 {
-	startColor = start;
-	color = final;
+	// startColor = start;
+	color = make_shared<Color>(0, 0, 0);
 }
 
 Lightness::~Lightness()
@@ -14,14 +14,14 @@ Lightness::~Lightness()
 
 bool Lightness::click (Vertex mouse)
 {
-	if (mouse.x() >= padding && mouse.x() < *width - padding
-	    && mouse.y() >= offset + padding && mouse.y() < offset + padding + height)
+	if (mouse.x() > 0 && mouse.x() < *width
+	    && mouse.y() > 0 && mouse.y() < height)
 	{
-		value = mouse.x() - padding;
+		value = mouse.x() / *width;
 		// unsigned char pixels[3];
 		// glReadPixels(mouse.x(), glutGet(GLUT_WINDOW_WIDTH) - mouse.y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 		// *color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
-		double percent = value / (*width -2 * padding);
+		double percent = value / (*width);
 		*color = Color(startColor->red() * percent, startColor->green() * percent, startColor->blue() * percent);
 		return true;
 	}
@@ -33,14 +33,23 @@ bool Lightness::click (Vertex mouse)
 
 void Lightness::render()
 {
-	glBegin(GL_TRIANGLE_STRIP);
+	glBegin(GL_QUADS);
 	startColor->bind();
-	glVertex2i(padding, offset + padding);
-	glVertex2i(padding, offset + padding + height - 1);
+	// left edge
+	glVertex2i(0, 0);
+	glVertex2i(0, height);
+	// white
 	glColor3d(1, 1, 1);
-	glVertex2i(*width - padding, offset + padding);
-	glVertex2i(*width - padding, offset + padding + height - 1);
+	// rigth edge
+	glVertex2i(*width, height);
+	glVertex2i(*width, 0);
 	glEnd();
 	renderFrame();
 	renderArrow();
+}
+
+void Lightness::update()
+{
+	for (int i = 0; i < 3; ++i)
+		(*color)[i] = (*startColor)[i] + (1 - (*startColor)[i]) * (value);
 }

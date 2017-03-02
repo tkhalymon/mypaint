@@ -15,12 +15,14 @@ class Brightness : public Scale
 {
 public:
 	// pointer to window width, scale height, distance from top (offset), pointer to color shade
-	Brightness(shared_ptr<int> width, int height, int offset, shared_ptr<Color> shade);
+	Brightness(shared_ptr<int> width, int height, shared_ptr<Color> shade);
 	~Brightness();
 	// handles mouse click and drag (move pressed)
 	bool click(Vertex mouse);
 	// draw scale
 	void render();
+
+	void update();
 	
 private:
 	shared_ptr<Color> lightColor;

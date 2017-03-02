@@ -23,8 +23,9 @@ class Toolbox;
 class Toolbox
 {
 public:
+	enum class Type { Instrument, Linewidth };
 	// toolbox width and paddings
-	Toolbox(shared_ptr<int> width, shared_ptr<int> padding);
+	Toolbox(shared_ptr<int> width);
 	~Toolbox();
 	// mouse click handler
 	virtual bool mouseClick(const Vertex& pos) = 0;
@@ -39,7 +40,6 @@ protected:
 
 	int height;
 	shared_ptr<int> width;
-	shared_ptr<int> padding;
 };
 
 #endif // __TOOLBOX_TOOLBOX_HPP__

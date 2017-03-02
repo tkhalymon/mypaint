@@ -167,7 +167,7 @@ void Window::glutReshape(int width, int height)
 	}
 	glViewport(0, 0, width, height);
 	glLoadIdentity();
-	glOrtho(1, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 1, 0, 1);
+	glOrtho(0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0, 0, 1);
 	glMatrixMode(GL_MODELVIEW);
 	*windows[glutGetWindow()]->width = glutGet(GLUT_WINDOW_WIDTH);
 	*windows[glutGetWindow()]->height = glutGet(GLUT_WINDOW_HEIGHT);

@@ -31,6 +31,8 @@ public:
 	const float& alpha() const;
 	// set as current
 	void bind() const;
+	// subscript operator
+	float& operator[] (int index);
 private:
 
 	// red, green, blue, alpha (transparency)

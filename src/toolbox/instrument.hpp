@@ -20,7 +20,7 @@ class Instrument;
 class Instrument : public Toolbox
 {
 public:
-	Instrument(shared_ptr<int> width, shared_ptr<int> padding, shared_ptr<int> instrument);
+	Instrument(shared_ptr<int> width, shared_ptr<int> instrument);
 	~Instrument();
 	void render() const;
 	bool mouseClick(const Vertex& pos);

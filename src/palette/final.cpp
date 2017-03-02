@@ -1,7 +1,7 @@
 #include "final.hpp"
 
-Final::Final(shared_ptr<int> width, int height, int offset, shared_ptr<Color> c)
-		: Scale (width, height, offset)
+Final::Final(shared_ptr<int> width, int height, shared_ptr<Color> c)
+		: Scale (width, height)
 {
 	// assign pointer
 	color = c;
@@ -24,10 +24,10 @@ void Final::render()
 	color->bind();
 	// start drawind rectangle
 	glBegin(GL_QUADS);
-	glVertex2i(padding, offset + padding);
-	glVertex2i(padding, offset + padding + height - 1);
-	glVertex2i(*width - padding, offset + padding + height - 1);
-	glVertex2i(*width - padding, offset + padding);
+	glVertex2i(0, 0);
+	glVertex2i(0, height);
+	glVertex2i(*width, height);
+	glVertex2i(*width, 0);
 	// findsh
 	glEnd();
 	// draw white frame

@@ -3,11 +3,11 @@
 
 #include <GL/glut.h>
 #include <memory>
-#include <vector>
+#include <map>
 
 using std::shared_ptr;
 using std::make_shared;
-using std::vector;
+using std::map;
 
 class Tools;
 
@@ -35,8 +35,12 @@ public:
 	void reshape(const int& width, const int& height);
 
 private:
+	// adjust window height to toolboxes height
+	void checkHeight();
+	// check if any toolboxes should be created or deleted
+	void checkToolboxes();
 	// vector of all toolboxes
-	vector<shared_ptr<Toolbox>> toolboxes;
+	map<Toolbox::Type, shared_ptr<Toolbox>> toolboxes;
 	// toolbox width (shared by all toolboxes) - window width - left and right paddings
 	shared_ptr<int> toolBoxWidth;
 	// distances from window edges

@@ -72,3 +72,15 @@ void Color::bind() const
 	// set OpenGL color in RGBA format
 	glColor4fv(data);
 }
+
+float& Color::operator[] (int index)
+{
+	if (index >= 0 && index < 4)
+	{
+		return data[index];
+	}
+	else
+	{
+		throw "Invalid index in color";
+	}
+}

@@ -161,7 +161,7 @@ bool Picture::redo()
 	}
 }
 
-shared_ptr<Color> Picture::colorPtr()
+shared_ptr<Color>& Picture::colorPtr()
 {
 	return activeColor;
 }

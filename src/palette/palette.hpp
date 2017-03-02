@@ -18,7 +18,7 @@ using std::vector;
 class Palette : public Window
 {
 public:
-	Palette(int width, int height, const char* title, shared_ptr<Color>);
+	Palette(int width, int height, const char* title, shared_ptr<Color>&);
 	~Palette();
 	
 	// rendering function
@@ -31,7 +31,9 @@ public:
 	void reshape(const int& width, const int& height);
 
 private:
-
+	shared_ptr<int> scaleWidth;
+	// distance from window borders and other toolboxes
+	int padding;
 	// vector of all scales
 	vector<shared_ptr<Scale>> scales;
 	// resulting color

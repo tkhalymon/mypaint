@@ -52,6 +52,8 @@ Third is lightness - from color selected on second scale to white.
 Here you can select drawing instrument (pencil, line, ellipse, rectangle),
 line width, transparency level, etc.
 
+Pencil doesn't support line width
+
 ### Hot keys
 
 |	Key		|	Action					|
