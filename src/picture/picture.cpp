@@ -129,7 +129,10 @@ bool Picture::undo()
 		{
 		case Action::Type::Create:
 			// remove figure
-			figures.pop_back();
+			if (!figures.empty())
+			{
+				figures.pop_back();
+			}
 			break;
 		case Action::Type::Delete:
 			// add deleted figure to figures vector
