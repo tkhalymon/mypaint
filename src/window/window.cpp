@@ -126,14 +126,14 @@ void Window::glutMousePressMove(int x, int y)
 
 void Window::glutKeyPress(unsigned char key, int x, int y)
 {
-	if (key == 27)
+	if (key == 27) // Esc
 	{
+		exit(0);
 		int winId = glutGetWindow();
 		glutDestroyWindow(winId);
 		windows.erase(winId);
 		if (windows.empty())
 		{
-			exit(0);
 		}
 		else
 		{

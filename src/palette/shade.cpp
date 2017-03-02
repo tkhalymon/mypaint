@@ -63,8 +63,8 @@ void Shade::render()
 void Shade::update()
 {
 	// update scale when dependent scale changed
-	unsigned char pixels[3];
-	glReadPixels(padding + value, glutGet(GLUT_WINDOW_HEIGHT) - offset - padding - 2, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-	*color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
-	glutPostRedisplay();
+	// unsigned char pixels[3];
+	// glReadPixels(padding + value, glutGet(GLUT_WINDOW_HEIGHT) - offset - padding - 2, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+	// *color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
+	// glutPostRedisplay();
 }

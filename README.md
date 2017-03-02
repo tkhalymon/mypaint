@@ -57,5 +57,5 @@ line width, transparency level, etc.
 |	Key		|	Action					|
 |-----------|---------------------------|
 | `Ctrl-z`	| Remove last added figure	|
-| `Ctrl-y`	| Revert last deletion		|
-| `Alt-q`	| Exit						|
+| `Ctrl-y`	| Revert last action		|
+| `Esc`		| Close current window		|

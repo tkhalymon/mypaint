@@ -28,13 +28,15 @@ bool Brightness::click (Vertex mouse)
 		// set scale current value
 		value = mouse.x() - padding;
 		// array to store color (RGB)
-		unsigned char pixel[3];
-		// get color from screen mouse.x() - x to start from glutGet(GLUT_WINDOW_WIDTH) - mouse.y() - y to start
-		// from (width - y, because OpenGL counts from bottom of the window). 1, 1 - area size, GL_RB - color
-		// scheme, GL_UNSIGNED_BYTE - return type, pixel - array to write to
-		glReadPixels(mouse.x(), glutGet(GLUT_WINDOW_WIDTH) - mouse.y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel);
-		// set color form pixel data array
-		*color = Color(pixel[0] / 255., pixel[1] / 255., pixel[2] / 255.);
+		// unsigned char pixel[3];
+		// // get color from screen mouse.x() - x to start from glutGet(GLUT_WINDOW_WIDTH) - mouse.y() - y to start
+		// // from (width - y, because OpenGL counts from bottom of the window). 1, 1 - area size, GL_RB - color
+		// // scheme, GL_UNSIGNED_BYTE - return type, pixel - array to write to
+		// glReadPixels(mouse.x(), glutGet(GLUT_WINDOW_WIDTH) - mouse.y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel);
+		// // set color form pixel data array
+		// *color = Color(pixel[0] / 255., pixel[1] / 255., pixel[2] / 255.);
+		double percent = value / (*width - 2 * padding);
+		*color = Color(lightColor->red() * percent, lightColor->green() * percent, lightColor->blue() * percent);
 		return true;
 	}
 	else

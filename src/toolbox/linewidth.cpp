@@ -2,6 +2,7 @@
 
 Linewidth::Linewidth(shared_ptr<int> width, shared_ptr<int> padding, shared_ptr<int> lineWidth) : Toolbox (width, padding), value(lineWidth)
 {
+	// set line width to 1
 	*value = 1;
 	height = 15 * 8;
 }

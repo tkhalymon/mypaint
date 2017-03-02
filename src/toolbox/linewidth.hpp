@@ -13,12 +13,14 @@ class Linewidth;
 class Linewidth : public Toolbox
 {
 public:
+	// pointer to picture current line width
 	Linewidth(shared_ptr<int> width, shared_ptr<int> padding, shared_ptr<int> lineWidth);
 	~Linewidth();
 	void render() const;
 	bool mouseClick(const Vertex& pos);
 
 private:
+	// line width value
 	shared_ptr<int> value;
 };
 

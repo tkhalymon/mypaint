@@ -1,7 +1,7 @@
 #include "palette.hpp"
 
 Palette::Palette(int width, int height, const char* title, shared_ptr<Color> color)
-				: Window(width, height, title), color(color)
+	: Window(width, height, title), color(color)
 {
 	// create all scales
 	// Shade scale
@@ -38,14 +38,13 @@ void Palette::display()
 void Palette::mousePress(const int& button, const int& state, const Vertex& mousePos)
 {
 	// if button is pressed down
-	if (state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
+	if (button == GLUT_LEFT_BUTTON)
 	{
-		// for each scale
-		for (auto i = scales.begin(); i != scales.end(); ++i)
+		for (vector<shared_ptr<Scale>>::iterator i = scales.begin(); i != scales.end(); ++i)
 		{
-			// if scale is clicked
 			if ((*i)->click(mousePos))
 			{
+				// redraw screen
 				glutPostRedisplay();
 				// don't check next
 				break;
@@ -56,8 +55,9 @@ void Palette::mousePress(const int& button, const int& state, const Vertex& mous
 		{
 			(*i)->update();
 		}
+		// redraw screen
+		glutPostRedisplay();
 	}
-	glutPostRedisplay();
 }
 
 void Palette::mousePressMove(const Vertex& mousePos)

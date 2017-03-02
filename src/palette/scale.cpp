@@ -66,6 +66,7 @@ shared_ptr<Color>& Scale::colorPtr()
 
 void Scale::update()
 {
+	glutPostRedisplay();
 	unsigned char pixels[3];
 	glReadPixels(padding + value, glutGet(GLUT_WINDOW_HEIGHT) - offset - padding - 1, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 	*color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);

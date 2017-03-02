@@ -23,11 +23,14 @@ class Toolbox;
 class Toolbox
 {
 public:
+	// toolbox width and paddings
 	Toolbox(shared_ptr<int> width, shared_ptr<int> padding);
 	~Toolbox();
-
+	// mouse click handler
 	virtual bool mouseClick(const Vertex& pos) = 0;
+	// drawing
 	virtual void render() const = 0;
+	// toolbox height
 	int getHeight();
 
 private:

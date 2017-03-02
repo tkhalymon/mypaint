@@ -18,9 +18,11 @@ bool Lightness::click (Vertex mouse)
 	    && mouse.y() >= offset + padding && mouse.y() < offset + padding + height)
 	{
 		value = mouse.x() - padding;
-		unsigned char pixels[3];
-		glReadPixels(mouse.x(), glutGet(GLUT_WINDOW_WIDTH) - mouse.y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-		*color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
+		// unsigned char pixels[3];
+		// glReadPixels(mouse.x(), glutGet(GLUT_WINDOW_WIDTH) - mouse.y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+		// *color = Color(pixels[0] / 255., pixels[1] / 255., pixels[2] / 255.);
+		double percent = value / (*width -2 * padding);
+		*color = Color(startColor->red() * percent, startColor->green() * percent, startColor->blue() * percent);
 		return true;
 	}
 	else
