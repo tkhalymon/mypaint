@@ -95,8 +95,7 @@ void Tools::checkHeight()
 void Tools::checkToolboxes()
 {
 	// if instrument is pencil and linewidth toolbox exists
-	// TODO: enum for instrument types
-	if (*picture->instrumentPtr() == 1 && toolboxes.find(Toolbox::Type::Linewidth) != toolboxes.end())
+	if (*picture->instrumentPtr() == Figure::Type::Pencil && toolboxes.find(Toolbox::Type::Linewidth) != toolboxes.end())
 	{
 		// remove line width toolbox
 		toolboxes.erase(Toolbox::Type::Linewidth);
@@ -104,7 +103,7 @@ void Tools::checkToolboxes()
 		checkHeight();
 	}
 	// if instrument is not pencil and linewidth toolbox doesn't exist
-	if (*picture->instrumentPtr() > 1 && toolboxes.find(Toolbox::Type::Linewidth) == toolboxes.end())
+	if (*picture->instrumentPtr() != Figure::Type::Pencil && toolboxes.find(Toolbox::Type::Linewidth) == toolboxes.end())
 	{
 		// add line width toolbox
 		toolboxes.insert(std::pair<Toolbox::Type, shared_ptr<Toolbox>>

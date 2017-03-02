@@ -17,7 +17,7 @@ class Tools;
 	Contains toolboxes, to set up current drawing options.
 */
 
-#include "../window/window.hpp"
+#include "../picture/picture.hpp"
 #include "linewidth.hpp"
 #include "instrument.hpp"
 

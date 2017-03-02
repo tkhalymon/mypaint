@@ -50,7 +50,7 @@ public:
 
 	shared_ptr<int> lineWidthPtr();
 
-	shared_ptr<int> instrumentPtr();
+	shared_ptr<Figure::Type> instrumentPtr();
 
 private:
 
@@ -64,7 +64,7 @@ private:
 	shared_ptr<Color> activeColor;
 	// current line width
 	shared_ptr<int> lineWidth;
-	shared_ptr<int> instrument;
+	shared_ptr<Figure::Type> instrument;
 };
 
 #endif // __PICTURE_PICTURE_HPP__

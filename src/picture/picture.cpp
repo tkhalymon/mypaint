@@ -18,7 +18,7 @@ Picture::Picture(const int& width, const int& height, const char* title)
 	// default instrument
 	if (instrument.use_count() == 0)
 	{
-		instrument = make_shared<int>(1);
+		instrument = make_shared<Figure::Type>(Figure::Type::Pencil);
 	}
 }
 
@@ -46,16 +46,16 @@ void Picture::mousePress(const int& button, const int& state, const Vertex& mous
 		{
 			switch (*instrument)
 			{
-			case 1:
+			case Figure::Type::Pencil:
 				figures.push_back(make_shared<Pencil>(mousePos, *activeColor));
 				break;
-			case 2:
+			case Figure::Type::Line:
 				figures.push_back(make_shared<Line>(mousePos, *activeColor, *lineWidth));
 				break;
-			case 3:
+			case Figure::Type::Ellipse:
 				figures.push_back(make_shared<Ellipse>(mousePos, *activeColor, *lineWidth));
 				break;
-			case 4:
+			case Figure::Type::Rectangle:
 				figures.push_back(make_shared<Rectangle>(mousePos, *activeColor, *lineWidth));
 				break;
 			}
@@ -174,7 +174,7 @@ shared_ptr<int> Picture::lineWidthPtr()
 	return lineWidth;
 }
 
-shared_ptr<int> Picture::instrumentPtr()
+shared_ptr<Figure::Type> Picture::instrumentPtr()
 {
 	return instrument;
 }

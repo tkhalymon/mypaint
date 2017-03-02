@@ -1,8 +1,8 @@
 #include "instrument.hpp"
 
-Instrument::Instrument(shared_ptr<int> width, shared_ptr<int> instrument) : Toolbox (width), value(instrument)
+Instrument::Instrument(shared_ptr<int> width, shared_ptr<Figure::Type> instrument) : Toolbox (width), value(instrument)
 {
-	*value = 1;
+	*value = Figure::Type::Pencil;
 	height = 20 * 4;
 }
 
@@ -10,6 +10,8 @@ Instrument::~Instrument()
 {
 
 }
+
+
 
 void Instrument::render() const
 {
@@ -27,10 +29,11 @@ void Instrument::render() const
 	// gray for selected
 	glColor3d(0.5, 0.5, 0.5);
 	glBegin(GL_QUADS);
-	glVertex2i(0, (*value - 1) * iconHeight);
-	glVertex2i(*width, (*value - 1) * iconHeight);
-	glVertex2i(*width, (*value) * iconHeight);
-	glVertex2i(0, (*value) * iconHeight);
+	int activeElement = Figure::getTypeId(*value);
+	glVertex2i(0, (activeElement - 1) * iconHeight);
+	glVertex2i(*width, (activeElement - 1) * iconHeight);
+	glVertex2i(*width, (activeElement) * iconHeight);
+	glVertex2i(0, (activeElement) * iconHeight);
 	glEnd();
 	// save matrix transformations
 	glPushMatrix();
@@ -78,7 +81,7 @@ bool Instrument::mouseClick(const Vertex& pos)
 		&& pos.y() > 0 && pos.y() < height)
 	{
 		// set value
-		*value = pos.y() / 20 + 1;
+		*value = Figure::getTypeById(pos.y() / 20 + 1);
 		return true;
 	}
 	else

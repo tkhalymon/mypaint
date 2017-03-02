@@ -20,14 +20,14 @@ class Instrument;
 class Instrument : public Toolbox
 {
 public:
-	Instrument(shared_ptr<int> width, shared_ptr<int> instrument);
+	Instrument(shared_ptr<int> width, shared_ptr<Figure::Type> instrument);
 	~Instrument();
 	void render() const;
 	bool mouseClick(const Vertex& pos);
 
 private:
 	
-	shared_ptr<int> value;
+	shared_ptr<Figure::Type> value;
 };
 
 #endif // __TOOLBOX_INSTRUMENT_HPP__

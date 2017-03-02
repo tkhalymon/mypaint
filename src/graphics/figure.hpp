@@ -24,6 +24,7 @@ class Figure;
 class Figure
 {
 public:
+	enum class Type { Pencil, Line, Ellipse, Rectangle };
 	// figure color
 	Figure(Color c);
 	virtual ~Figure();
@@ -36,12 +37,10 @@ public:
 	// is completely created
 	bool finished();
 
-	// Factory pattern
-	// static shared_ptr<Figure> makeFigure(int type);
-	// stores all figure types
-
-	// static std::map<string, int> types;
-
+	static int getTypeId(Figure::Type t);
+	
+	static Figure::Type getTypeById(int);
+	
 protected:
 
 	// figure color
